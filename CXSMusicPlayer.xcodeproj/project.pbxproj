@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A5839E0927EB067C0066705B /* CXSPlayerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A5839E0827EB067C0066705B /* CXSPlayerManager.m */; };
+		A5839E0E27EB3D320066705B /* test.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A5839E0D27EB3D320066705B /* test.mp3 */; };
+		A5E9459D27E1DEBD008B1E25 /* AVPlayerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A5E9459C27E1DEBD008B1E25 /* AVPlayerManager.m */; };
 		A5E95C1B27E0802B008B1E25 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A5E95C1A27E0802B008B1E25 /* AppDelegate.m */; };
 		A5E95C1E27E0802B008B1E25 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A5E95C1D27E0802B008B1E25 /* SceneDelegate.m */; };
 		A5E95C2127E0802B008B1E25 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5E95C2027E0802B008B1E25 /* ViewController.m */; };
@@ -20,6 +23,7 @@
 		A5E95C4527E0802D008B1E25 /* CXSMusicPlayerUITestsLaunchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A5E95C4427E0802D008B1E25 /* CXSMusicPlayerUITestsLaunchTests.m */; };
 		A5E95C5327E0817E008B1E25 /* CXSTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5E95C5227E0817E008B1E25 /* CXSTabBarController.m */; };
 		A5E95C5627E08497008B1E25 /* CXSTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = A5E95C5527E08497008B1E25 /* CXSTabBar.m */; };
+		A5EBE02127E9F2EB0013585C /* CXSPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5EBE02027E9F2EB0013585C /* CXSPlayerViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +44,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A5839E0727EB067C0066705B /* CXSPlayerManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CXSPlayerManager.h; sourceTree = "<group>"; };
+		A5839E0827EB067C0066705B /* CXSPlayerManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CXSPlayerManager.m; sourceTree = "<group>"; };
+		A5839E0D27EB3D320066705B /* test.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = test.mp3; sourceTree = "<group>"; };
+		A5E9459B27E1DEBD008B1E25 /* AVPlayerManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVPlayerManager.h; sourceTree = "<group>"; };
+		A5E9459C27E1DEBD008B1E25 /* AVPlayerManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVPlayerManager.m; sourceTree = "<group>"; };
 		A5E95C1627E0802B008B1E25 /* CXSMusicPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CXSMusicPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5E95C1927E0802B008B1E25 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		A5E95C1A27E0802B008B1E25 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -62,6 +71,8 @@
 		A5E95C5227E0817E008B1E25 /* CXSTabBarController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CXSTabBarController.m; sourceTree = "<group>"; };
 		A5E95C5427E08497008B1E25 /* CXSTabBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CXSTabBar.h; sourceTree = "<group>"; };
 		A5E95C5527E08497008B1E25 /* CXSTabBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CXSTabBar.m; sourceTree = "<group>"; };
+		A5EBE01F27E9F2EB0013585C /* CXSPlayerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CXSPlayerViewController.h; sourceTree = "<group>"; };
+		A5EBE02027E9F2EB0013585C /* CXSPlayerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CXSPlayerViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +100,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A5839E0A27EB391A0066705B /* resource */ = {
+			isa = PBXGroup;
+			children = (
+				A5839E0D27EB3D320066705B /* test.mp3 */,
+			);
+			path = resource;
+			sourceTree = "<group>";
+		};
 		A5E95C0D27E0802B008B1E25 = {
 			isa = PBXGroup;
 			children = (
@@ -118,13 +137,17 @@
 				A5E95C1D27E0802B008B1E25 /* SceneDelegate.m */,
 				A5E95C1F27E0802B008B1E25 /* ViewController.h */,
 				A5E95C2027E0802B008B1E25 /* ViewController.m */,
+				A5EBE01E27E9F2C20013585C /* CXSPlayer */,
 				A5E95C5727E0849D008B1E25 /* CXSTabBar */,
 				A5E95C2227E0802B008B1E25 /* Main.storyboard */,
 				A5E95C2827E0802D008B1E25 /* Assets.xcassets */,
 				A5E95C2A27E0802D008B1E25 /* LaunchScreen.storyboard */,
 				A5E95C2D27E0802D008B1E25 /* Info.plist */,
 				A5E95C2E27E0802D008B1E25 /* main.m */,
+				A5839E0A27EB391A0066705B /* resource */,
 				A5E95C2527E0802B008B1E25 /* CXSMusicPlayer.xcdatamodeld */,
+				A5E9459B27E1DEBD008B1E25 /* AVPlayerManager.h */,
+				A5E9459C27E1DEBD008B1E25 /* AVPlayerManager.m */,
 			);
 			path = CXSMusicPlayer;
 			sourceTree = "<group>";
@@ -155,6 +178,17 @@
 				A5E95C5527E08497008B1E25 /* CXSTabBar.m */,
 			);
 			path = CXSTabBar;
+			sourceTree = "<group>";
+		};
+		A5EBE01E27E9F2C20013585C /* CXSPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				A5EBE01F27E9F2EB0013585C /* CXSPlayerViewController.h */,
+				A5EBE02027E9F2EB0013585C /* CXSPlayerViewController.m */,
+				A5839E0727EB067C0066705B /* CXSPlayerManager.h */,
+				A5839E0827EB067C0066705B /* CXSPlayerManager.m */,
+			);
+			path = CXSPlayer;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -262,6 +296,7 @@
 			files = (
 				A5E95C2C27E0802D008B1E25 /* LaunchScreen.storyboard in Resources */,
 				A5E95C2927E0802D008B1E25 /* Assets.xcassets in Resources */,
+				A5839E0E27EB3D320066705B /* test.mp3 in Resources */,
 				A5E95C2427E0802B008B1E25 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -290,10 +325,13 @@
 				A5E95C2F27E0802D008B1E25 /* main.m in Sources */,
 				A5E95C2127E0802B008B1E25 /* ViewController.m in Sources */,
 				A5E95C1B27E0802B008B1E25 /* AppDelegate.m in Sources */,
+				A5E9459D27E1DEBD008B1E25 /* AVPlayerManager.m in Sources */,
 				A5E95C1E27E0802B008B1E25 /* SceneDelegate.m in Sources */,
 				A5E95C5627E08497008B1E25 /* CXSTabBar.m in Sources */,
+				A5EBE02127E9F2EB0013585C /* CXSPlayerViewController.m in Sources */,
 				A5E95C5327E0817E008B1E25 /* CXSTabBarController.m in Sources */,
 				A5E95C2727E0802B008B1E25 /* CXSMusicPlayer.xcdatamodeld in Sources */,
+				A5839E0927EB067C0066705B /* CXSPlayerManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
