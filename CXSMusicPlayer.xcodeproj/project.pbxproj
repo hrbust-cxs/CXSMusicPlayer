@@ -7,8 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8FE969B06B39DA2211A9F134 /* libPods-CXSMusicPlayer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A125937D7B70F88B332AE59 /* libPods-CXSMusicPlayer.a */; };
+		A53CF56827F5DE4B00B20600 /* test1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A53CF56727F5DE4B00B20600 /* test1.mp3 */; };
+		A53CF56A27F5DE6400B20600 /* test2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A53CF56927F5DE6400B20600 /* test2.mp3 */; };
 		A5839E0927EB067C0066705B /* CXSPlayerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A5839E0827EB067C0066705B /* CXSPlayerManager.m */; };
-		A5839E0E27EB3D320066705B /* test.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A5839E0D27EB3D320066705B /* test.mp3 */; };
+		A5839E0E27EB3D320066705B /* test0.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A5839E0D27EB3D320066705B /* test0.mp3 */; };
+		A5D72DF52800276700AAF4D0 /* CXSPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = A5D72DF42800276700AAF4D0 /* CXSPlayerView.m */; };
+		A5D72DF828005D4300AAF4D0 /* CXSMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5D72DF728005D4300AAF4D0 /* CXSMainViewController.m */; };
 		A5E9459D27E1DEBD008B1E25 /* AVPlayerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A5E9459C27E1DEBD008B1E25 /* AVPlayerManager.m */; };
 		A5E95C1B27E0802B008B1E25 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A5E95C1A27E0802B008B1E25 /* AppDelegate.m */; };
 		A5E95C1E27E0802B008B1E25 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A5E95C1D27E0802B008B1E25 /* SceneDelegate.m */; };
@@ -44,9 +49,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4A125937D7B70F88B332AE59 /* libPods-CXSMusicPlayer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CXSMusicPlayer.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8029EABFE5F9AA45F2479CC0 /* Pods-CXSMusicPlayer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CXSMusicPlayer.release.xcconfig"; path = "Target Support Files/Pods-CXSMusicPlayer/Pods-CXSMusicPlayer.release.xcconfig"; sourceTree = "<group>"; };
+		87C682438F73731C7D7DE816 /* Pods-CXSMusicPlayer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CXSMusicPlayer.debug.xcconfig"; path = "Target Support Files/Pods-CXSMusicPlayer/Pods-CXSMusicPlayer.debug.xcconfig"; sourceTree = "<group>"; };
+		A53CF56727F5DE4B00B20600 /* test1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = test1.mp3; sourceTree = "<group>"; };
+		A53CF56927F5DE6400B20600 /* test2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = test2.mp3; sourceTree = "<group>"; };
 		A5839E0727EB067C0066705B /* CXSPlayerManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CXSPlayerManager.h; sourceTree = "<group>"; };
 		A5839E0827EB067C0066705B /* CXSPlayerManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CXSPlayerManager.m; sourceTree = "<group>"; };
-		A5839E0D27EB3D320066705B /* test.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = test.mp3; sourceTree = "<group>"; };
+		A5839E0D27EB3D320066705B /* test0.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = test0.mp3; sourceTree = "<group>"; };
+		A5D72DF32800276700AAF4D0 /* CXSPlayerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CXSPlayerView.h; sourceTree = "<group>"; };
+		A5D72DF42800276700AAF4D0 /* CXSPlayerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CXSPlayerView.m; sourceTree = "<group>"; };
+		A5D72DF628005D4300AAF4D0 /* CXSMainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CXSMainViewController.h; sourceTree = "<group>"; };
+		A5D72DF728005D4300AAF4D0 /* CXSMainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CXSMainViewController.m; sourceTree = "<group>"; };
 		A5E9459B27E1DEBD008B1E25 /* AVPlayerManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVPlayerManager.h; sourceTree = "<group>"; };
 		A5E9459C27E1DEBD008B1E25 /* AVPlayerManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVPlayerManager.m; sourceTree = "<group>"; };
 		A5E95C1627E0802B008B1E25 /* CXSMusicPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CXSMusicPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -80,6 +94,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8FE969B06B39DA2211A9F134 /* libPods-CXSMusicPlayer.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -103,7 +118,9 @@
 		A5839E0A27EB391A0066705B /* resource */ = {
 			isa = PBXGroup;
 			children = (
-				A5839E0D27EB3D320066705B /* test.mp3 */,
+				A53CF56927F5DE6400B20600 /* test2.mp3 */,
+				A53CF56727F5DE4B00B20600 /* test1.mp3 */,
+				A5839E0D27EB3D320066705B /* test0.mp3 */,
 			);
 			path = resource;
 			sourceTree = "<group>";
@@ -115,6 +132,8 @@
 				A5E95C3727E0802D008B1E25 /* CXSMusicPlayerTests */,
 				A5E95C4127E0802D008B1E25 /* CXSMusicPlayerUITests */,
 				A5E95C1727E0802B008B1E25 /* Products */,
+				F6A80BF5A9733CDA2713BF38 /* Pods */,
+				B2176572E4FD1EDC458B368E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -139,12 +158,12 @@
 				A5E95C2027E0802B008B1E25 /* ViewController.m */,
 				A5EBE01E27E9F2C20013585C /* CXSPlayer */,
 				A5E95C5727E0849D008B1E25 /* CXSTabBar */,
+				A5839E0A27EB391A0066705B /* resource */,
 				A5E95C2227E0802B008B1E25 /* Main.storyboard */,
 				A5E95C2827E0802D008B1E25 /* Assets.xcassets */,
 				A5E95C2A27E0802D008B1E25 /* LaunchScreen.storyboard */,
 				A5E95C2D27E0802D008B1E25 /* Info.plist */,
 				A5E95C2E27E0802D008B1E25 /* main.m */,
-				A5839E0A27EB391A0066705B /* resource */,
 				A5E95C2527E0802B008B1E25 /* CXSMusicPlayer.xcdatamodeld */,
 				A5E9459B27E1DEBD008B1E25 /* AVPlayerManager.h */,
 				A5E9459C27E1DEBD008B1E25 /* AVPlayerManager.m */,
@@ -187,8 +206,29 @@
 				A5EBE02027E9F2EB0013585C /* CXSPlayerViewController.m */,
 				A5839E0727EB067C0066705B /* CXSPlayerManager.h */,
 				A5839E0827EB067C0066705B /* CXSPlayerManager.m */,
+				A5D72DF32800276700AAF4D0 /* CXSPlayerView.h */,
+				A5D72DF42800276700AAF4D0 /* CXSPlayerView.m */,
+				A5D72DF628005D4300AAF4D0 /* CXSMainViewController.h */,
+				A5D72DF728005D4300AAF4D0 /* CXSMainViewController.m */,
 			);
 			path = CXSPlayer;
+			sourceTree = "<group>";
+		};
+		B2176572E4FD1EDC458B368E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4A125937D7B70F88B332AE59 /* libPods-CXSMusicPlayer.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F6A80BF5A9733CDA2713BF38 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				87C682438F73731C7D7DE816 /* Pods-CXSMusicPlayer.debug.xcconfig */,
+				8029EABFE5F9AA45F2479CC0 /* Pods-CXSMusicPlayer.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -198,6 +238,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A5E95C4827E0802D008B1E25 /* Build configuration list for PBXNativeTarget "CXSMusicPlayer" */;
 			buildPhases = (
+				9CFD8574D8C0F8AFA618B2CF /* [CP] Check Pods Manifest.lock */,
 				A5E95C1227E0802B008B1E25 /* Sources */,
 				A5E95C1327E0802B008B1E25 /* Frameworks */,
 				A5E95C1427E0802B008B1E25 /* Resources */,
@@ -296,7 +337,9 @@
 			files = (
 				A5E95C2C27E0802D008B1E25 /* LaunchScreen.storyboard in Resources */,
 				A5E95C2927E0802D008B1E25 /* Assets.xcassets in Resources */,
-				A5839E0E27EB3D320066705B /* test.mp3 in Resources */,
+				A5839E0E27EB3D320066705B /* test0.mp3 in Resources */,
+				A53CF56A27F5DE6400B20600 /* test2.mp3 in Resources */,
+				A53CF56827F5DE4B00B20600 /* test1.mp3 in Resources */,
 				A5E95C2427E0802B008B1E25 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -317,6 +360,31 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		9CFD8574D8C0F8AFA618B2CF /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CXSMusicPlayer-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		A5E95C1227E0802B008B1E25 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -330,8 +398,10 @@
 				A5E95C5627E08497008B1E25 /* CXSTabBar.m in Sources */,
 				A5EBE02127E9F2EB0013585C /* CXSPlayerViewController.m in Sources */,
 				A5E95C5327E0817E008B1E25 /* CXSTabBarController.m in Sources */,
+				A5D72DF828005D4300AAF4D0 /* CXSMainViewController.m in Sources */,
 				A5E95C2727E0802B008B1E25 /* CXSMusicPlayer.xcdatamodeld in Sources */,
 				A5839E0927EB067C0066705B /* CXSPlayerManager.m in Sources */,
+				A5D72DF52800276700AAF4D0 /* CXSPlayerView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -501,6 +571,7 @@
 		};
 		A5E95C4927E0802D008B1E25 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 87C682438F73731C7D7DE816 /* Pods-CXSMusicPlayer.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -527,6 +598,7 @@
 		};
 		A5E95C4A27E0802D008B1E25 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8029EABFE5F9AA45F2479CC0 /* Pods-CXSMusicPlayer.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

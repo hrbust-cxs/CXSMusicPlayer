@@ -7,9 +7,11 @@
 
 #import "CXSPlayerViewController.h"
 #import "CXSPlayerManager.h"
+#import "CXSPlayerView.h"
 
-@interface CXSPlayerViewController ()
+@interface CXSPlayerViewController () <CXSPlayVCActionProcotol>
 
+@property (nonatomic, strong)CXSPlayerView *playView;
 @property (nonatomic, strong)CXSPlayerManager *playerManager;
 
 @end
@@ -18,23 +20,66 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(100, 100, 100, 40)];
-    btn.backgroundColor = [UIColor whiteColor];
-    btn.titleLabel.text = @"点击播放";
-    btn.titleLabel.textColor = [UIColor blackColor];
-    btn.titleLabel.textAlignment = NSTextAlignmentCenter;
-    btn.titleLabel.font = [UIFont systemFontOfSize:12];
-    [btn addTarget:self action:@selector(playMusic) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:btn];
+    [self initDefault];
 }
 
+- (void)initDefault {
+    [self.view addSubview:self.playView];
+    [self playMusic];
+    self.playerManager.setSliderValue = ^(CGFloat value) {
+        [self.playView setSliderValue:value];
+    };
+}
+
+#pragma mark - CXSPlayVCActionProcotol
+- (void)changeLikeMode:(BOOL)isLike {
+    //option
+}
+
+- (void)downLoadCurrentMusic {
+    //option
+}
+
+- (void)changeSilder:(CGFloat)value {
+    //option
+    [self.playerManager playerProgressWithProgressFloat:value];
+}
+
+- (void)changePlayerMode:(NSInteger)type {
+    self.playerManager.playerType = type;
+}
+
+- (void)playLastMusic {
+    [self.playerManager lastSong];
+}
+
+- (void)playPauseMusic:(BOOL)isPlay {
+    if(isPlay){
+        [self.playerManager playMusic];
+    }else {
+        [self.playerManager pasueMusic];
+    }
+}
+
+- (void)playNextMusic {
+    [self.playerManager nextSong];
+}
+
+- (void)showCurrentMusicList {
+    //option
+}
+
+
+
+#pragma mark - private
 - (void)playMusic {
-    NSURL *url = [NSURL URLWithString:@"https://test-cxs.oss-cn-hangzhou.aliyuncs.com/test/test.mp3?Expires=1648089998&OSSAccessKeyId=TMP.3KieCGQxUeHZnFa4ufef699Xe8XHSy7KYdPTHaEVFRveL5HYMAVHvJnyku7ebpDqeBPshrgtBDnmujSwuvyPEM1zTbpejb&Signature=it33DuMAJf4PJQglpUqnylxWjHM%3D"];
-    [self.playerManager musicPlayerWithURL:url];
-}
-
-- (void)progressSliderDidChange {
-    [self.playerManager playerProgressWithProgressFloat:0.8];
+    NSMutableArray *musicArray = [NSMutableArray array];
+    for(int i = 0; i < 3; i ++) {
+        NSString *name = [NSString stringWithFormat:@"test%d",i];
+        NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:name ofType:@"mp3"]];
+        [musicArray addObject:url];
+    }
+    [self.playerManager musicPlayerWithArray:musicArray andIndex:0];
 }
 
 #pragma mark - getter setter
@@ -43,6 +88,14 @@
         _playerManager = [CXSPlayerManager shareManager];
     }
     return _playerManager;
+}
+
+- (CXSPlayerView *)playView {
+    if(!_playView) {
+        _playView = [[CXSPlayerView alloc] init];
+        _playView.delegate = self;
+    }
+    return _playView;
 }
 
 @end
