@@ -45,16 +45,18 @@ const NSString *urlPreString = @"https://music-info-1302643497.cos.ap-guangzhou.
     //option
 }
 
-- (BOOL)downLoadCurrentMusicSuccess:(BOOL)isDown {
+- (BOOL)downLoadAndRemoveCurrentMusicSuccess:(BOOL)isDown {
     //option
     NSString *idString = @"1.mp3";
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *pathDocuments = [paths objectAtIndex:0];
+    NSString *path = [NSString stringWithFormat:@"%@/%@", pathDocuments,idString];
+    
     if(!isDown){
         //下载
         NSURL *url = [NSURL URLWithString:@"https://music-info-1302643497.cos.ap-guangzhou.myqcloud.com/music/song/1.mp3"];
         //获取document路径
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *pathDocuments = [paths objectAtIndex:0];
-        NSString *path = [NSString stringWithFormat:@"%@/%@", pathDocuments,idString];
         if([[NSFileManager defaultManager] fileExistsAtPath:path]) {
             [SVProgressHUD showWithStatus:@"文件已存在"];
             [SVProgressHUD dismissWithDelay:0.5 completion:nil];
@@ -65,6 +67,12 @@ const NSString *urlPreString = @"https://music-info-1302643497.cos.ap-guangzhou.
         
     }else{
         //删除
+        if([[NSFileManager defaultManager] fileExistsAtPath:path]) {
+            [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
+            return YES;
+        }
+        [SVProgressHUD showWithStatus:@"文件不存在，删除失败"];
+        [SVProgressHUD dismissWithDelay:0.5 completion:nil];
         return NO;
     }
 }

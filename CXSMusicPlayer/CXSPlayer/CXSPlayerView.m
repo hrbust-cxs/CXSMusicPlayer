@@ -118,7 +118,7 @@
 
 //下载按钮点击
 - (void)didDownDeleteLoadButtonClick {
-    BOOL isSuccess = [self.delegate downLoadCurrentMusicSuccess:self.model.isDownLoad];
+    BOOL isSuccess = [self.delegate downLoadAndRemoveCurrentMusicSuccess:self.model.isDownLoad];
     if(isSuccess){
         self.model.isDownLoad = !self.model.isDownLoad;
     }

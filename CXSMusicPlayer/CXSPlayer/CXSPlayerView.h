@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol CXSPlayVCActionProcotol <NSObject>
 
 - (void)changeLikeMode:(BOOL)isLike;
-- (BOOL)downLoadCurrentMusicSuccess:(BOOL)isDown;
+- (BOOL)downLoadAndRemoveCurrentMusicSuccess:(BOOL)isDown;
 - (void)changeSilder:(CGFloat)value;
 - (void)changePlayerMode:(NSInteger)type;
 - (void)playLastMusic;
