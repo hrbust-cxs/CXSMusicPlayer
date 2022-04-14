@@ -10,13 +10,11 @@
 #define kScreenWidth [UIScreen mainScreen].bounds.size.width
 #define kScreenHeight [UIScreen mainScreen].bounds.size.height
 
+@implementation CXSPlayerViewModel
+
+@end
+
 @interface CXSPlayerView()
-
-@property (nonatomic) BOOL isLike;
-@property (nonatomic) BOOL isDownLoad;
-@property (nonatomic) NSInteger playType;
-@property (nonatomic) BOOL isPlay;
-
 
 @property (nonatomic, strong) UIButton *likeBtn;  //喜欢按钮
 @property (nonatomic, strong) UIButton *downLoadBtn; //下载按钮
@@ -33,10 +31,11 @@
 
 @implementation CXSPlayerView
 
-- (instancetype)init
+- (instancetype)initWithModel:(CXSPlayerViewModel*)model
 {
     self = [super init];
     if (self) {
+        self.model = model;
         [self initDefaultInfo];
         [self addAllSubViews];
         [self layOutAllSubViews];
@@ -48,10 +47,10 @@
 - (void)initDefaultInfo {
     self.backgroundColor = [UIColor grayColor];
     self.frame = CGRectMake(0, 0, kScreenWidth, kScreenHeight);
-    _isLike = NO;
-    _isDownLoad = NO;
-    _playTypeBtn = 0;
-    _isPlay = YES;
+    [self.model addObserver:self forKeyPath:@"isLike" options:NSKeyValueObservingOptionNew context:nil];
+    [self.model addObserver:self forKeyPath:@"isDownLoad" options:NSKeyValueObservingOptionNew context:nil];
+    [self.model addObserver:self forKeyPath:@"playType" options:NSKeyValueObservingOptionNew context:nil];
+    [self.model addObserver:self forKeyPath:@"isPlay" options:NSKeyValueObservingOptionNew context:nil];
 }
 
 - (void)addAllSubViews {
@@ -113,27 +112,16 @@
 #pragma mark - action
 //喜欢按钮点击
 - (void)didLikeButtonClick {
-    _isLike = !_isLike;
-    if(_isLike) {
-        [_likeBtn setBackgroundImage:[UIImage imageNamed:@"play_icn_loved"] forState:UIControlStateNormal];
-    } else {
-        [_likeBtn setBackgroundImage:[UIImage imageNamed:@"play_icn_love"] forState:UIControlStateNormal];
-    }
-    //other option
-    [self.delegate changeLikeMode:_isLike];
+    self.model.isLike = !self.model.isLike;
+    [self.delegate changeLikeMode:self.model.isLike];
 }
 
 //下载按钮点击
-- (void)didDownLoadButtonClick {
-    _isDownLoad = !_isDownLoad;
-    if(_isDownLoad) {
-        [_downLoadBtn setBackgroundImage:[UIImage imageNamed:@"play_bar_downloaded"] forState:UIControlStateNormal];
-    } else {
-        [_downLoadBtn setBackgroundImage:[UIImage imageNamed:@"play_bar_download"] forState:UIControlStateNormal];
+- (void)didDownDeleteLoadButtonClick {
+    BOOL isSuccess = [self.delegate downLoadCurrentMusicSuccess:self.model.isDownLoad];
+    if(isSuccess){
+        self.model.isDownLoad = !self.model.isDownLoad;
     }
-    //other option
-    [self.delegate downLoadCurrentMusic];
-    
 }
 
 //进度条拖动
@@ -145,17 +133,10 @@
 //播放模式按钮点击
 - (void)didPlayTypeButtonClick {
     //切换下一个
-    _playType = (_playType+1)%3;
+    self.model.playType = (self.model.playType+1)%3;
     
-    if(_playType == 0) {
-        [_playTypeBtn setBackgroundImage:[UIImage imageNamed:@"play_icn_loop"] forState:UIControlStateNormal];
-    }else if(_playType == 1) {
-        [_playTypeBtn setBackgroundImage:[UIImage imageNamed:@"play_icn_random"] forState:UIControlStateNormal];
-    }else if(_playType == 2) {
-        [_playTypeBtn setBackgroundImage:[UIImage imageNamed:@"play_icn_one"] forState:UIControlStateNormal];
-    }
     //other option
-    [self.delegate changePlayerMode:_playType];
+    [self.delegate changePlayerMode:self.model.playType];
 }
 
 //上一曲按钮点击
@@ -166,14 +147,9 @@
 
 //播放/暂停按钮点击
 - (void)didPlayPauseButtonClick {
-    _isPlay = !_isPlay;
-    if(_isPlay){
-        [_playPauseBtn setBackgroundImage:[UIImage imageNamed:@"play_btn_pause"] forState:UIControlStateNormal];
-    }else {
-        [_playPauseBtn setBackgroundImage:[UIImage imageNamed:@"play_btn_play"] forState:UIControlStateNormal];
-    }
+    self.model.isPlay = !self.model.isPlay;
     //other option
-    [self.delegate playPauseMusic:_isPlay];
+    [self.delegate playPauseMusic:self.model.isPlay];
 }
 
 //下一曲按钮点击
@@ -186,6 +162,38 @@
 - (void)didMusicListButtonClick {
     //other option
     [self.delegate showCurrentMusicList];
+}
+
+#pragma mark - KVO
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context{
+    id newValueString = change[@"new"];
+    if([keyPath isEqualToString:@"isLike"]){
+        if(self.model.isLike) {
+            [_likeBtn setBackgroundImage:[UIImage imageNamed:@"play_icn_loved"] forState:UIControlStateNormal];
+        } else {
+            [_likeBtn setBackgroundImage:[UIImage imageNamed:@"play_icn_love"] forState:UIControlStateNormal];
+        }
+    }else if([keyPath isEqualToString:@"isDownLoad"]){
+        if(self.model.isDownLoad > 0) {
+            [_downLoadBtn setBackgroundImage:[UIImage imageNamed:@"play_bar_downloaded"] forState:UIControlStateNormal];
+        } else {
+            [_downLoadBtn setBackgroundImage:[UIImage imageNamed:@"play_bar_download"] forState:UIControlStateNormal];
+        }
+    }else if([keyPath isEqualToString:@"playType"]){
+        if(self.model.playType == 0) {
+            [_playTypeBtn setBackgroundImage:[UIImage imageNamed:@"play_icn_loop"] forState:UIControlStateNormal];
+        }else if(self.model.playType == 1) {
+            [_playTypeBtn setBackgroundImage:[UIImage imageNamed:@"play_icn_random"] forState:UIControlStateNormal];
+        }else if(self.model.playType == 2) {
+            [_playTypeBtn setBackgroundImage:[UIImage imageNamed:@"play_icn_one"] forState:UIControlStateNormal];
+        }
+    }else if([keyPath isEqualToString:@"isPlay"]){
+        if(self.model.isPlay){
+            [_playPauseBtn setBackgroundImage:[UIImage imageNamed:@"play_btn_pause"] forState:UIControlStateNormal];
+        }else {
+            [_playPauseBtn setBackgroundImage:[UIImage imageNamed:@"play_btn_play"] forState:UIControlStateNormal];
+        }
+    }
 }
 
 
@@ -204,7 +212,7 @@
     if(!_downLoadBtn) {
         _downLoadBtn = [[UIButton alloc] init];
         _downLoadBtn.backgroundColor = [UIColor clearColor];
-        [_downLoadBtn addTarget:self action:@selector(didDownLoadButtonClick) forControlEvents:UIControlEventTouchUpInside];
+        [_downLoadBtn addTarget:self action:@selector(didDownDeleteLoadButtonClick) forControlEvents:UIControlEventTouchUpInside];
         [_downLoadBtn setBackgroundImage:[UIImage imageNamed:@"play_bar_download"] forState:UIControlStateNormal];
     }
     return _downLoadBtn;

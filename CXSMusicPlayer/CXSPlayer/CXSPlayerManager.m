@@ -43,6 +43,11 @@
     //当前时间 / 总时间
     CGFloat value = CMTimeGetSeconds(self.player.currentItem.currentTime) / CMTimeGetSeconds(self.player.currentItem.duration);
     self.setSliderValue(value);
+    //进度条结束
+    if(value >= 0.999){
+        [self nextSong];
+        self.updatePlayBtnUI();
+    }
 }
 
 #pragma mark - public method
@@ -113,8 +118,8 @@
         [self.player replaceCurrentItemWithPlayerItem:playerItem];
     }else {
         self.player = [self.player initWithPlayerItem:playerItem];
-        [self playMusic];
     }
+    [self playMusic];
 }
 
 //将slider的值传入使 歌曲进度 前进或后退

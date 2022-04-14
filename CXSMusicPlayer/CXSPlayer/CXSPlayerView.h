@@ -10,10 +10,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+//protocol
 @protocol CXSPlayVCActionProcotol <NSObject>
 
 - (void)changeLikeMode:(BOOL)isLike;
-- (void)downLoadCurrentMusic;
+- (BOOL)downLoadCurrentMusicSuccess:(BOOL)isDown;
 - (void)changeSilder:(CGFloat)value;
 - (void)changePlayerMode:(NSInteger)type;
 - (void)playLastMusic;
@@ -23,10 +24,24 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+//model
+@interface CXSPlayerViewModel : NSObject
+
+@property (nonatomic) BOOL isLike;
+@property (nonatomic) BOOL isDownLoad;
+@property (nonatomic) NSInteger playType;
+@property (nonatomic) BOOL isPlay;
+
+@end
+
 @interface CXSPlayerView : UIView
 
+//class
 @property(nonatomic, weak) id<CXSPlayVCActionProcotol> delegate;
 
+@property(nonatomic) CXSPlayerViewModel *model;
+
+- (instancetype)initWithModel:(CXSPlayerViewModel*)model;
 - (void)setSliderValue:(CGFloat)value;
 
 @end

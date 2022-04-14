@@ -19,6 +19,7 @@ typedef NS_ENUM(NSInteger, playerType) {
 @interface CXSPlayerManager : NSObject
 
 @property (nonatomic) void(^setSliderValue)(CGFloat value);
+@property (nonatomic) void(^updatePlayBtnUI)(void);
 
 //AVPlayer播放器
 @property (nonatomic, strong) AVPlayer *player;

@@ -15,20 +15,24 @@ PODS:
   - AFNetworking/UIKit (3.2.1):
     - AFNetworking/NSURLSession
   - Masonry (1.1.0)
+  - SVProgressHUD (2.2.5)
 
 DEPENDENCIES:
   - AFNetworking
   - Masonry
+  - SVProgressHUD
 
 SPEC REPOS:
   trunk:
     - AFNetworking
     - Masonry
+    - SVProgressHUD
 
 SPEC CHECKSUMS:
   AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
+  SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
 
-PODFILE CHECKSUM: eb2ad4cd652ce21b1ea244085ddbe028a19ce405
+PODFILE CHECKSUM: fbe5c43f9cb888bc91b03b807fd47e2c7f1e06de
 
 COCOAPODS: 1.11.2

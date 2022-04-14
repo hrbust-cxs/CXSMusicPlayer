@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8FE969B06B39DA2211A9F134 /* libPods-CXSMusicPlayer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A125937D7B70F88B332AE59 /* libPods-CXSMusicPlayer.a */; };
+		850E15A116576FBD51706378 /* libPods-CXSMusicPlayer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A125937D7B70F88B332AE59 /* libPods-CXSMusicPlayer.a */; };
 		A53CF56827F5DE4B00B20600 /* test1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A53CF56727F5DE4B00B20600 /* test1.mp3 */; };
 		A53CF56A27F5DE6400B20600 /* test2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A53CF56927F5DE6400B20600 /* test2.mp3 */; };
 		A5839E0927EB067C0066705B /* CXSPlayerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A5839E0827EB067C0066705B /* CXSPlayerManager.m */; };
@@ -94,7 +94,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8FE969B06B39DA2211A9F134 /* libPods-CXSMusicPlayer.a in Frameworks */,
+				850E15A116576FBD51706378 /* libPods-CXSMusicPlayer.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -242,6 +242,7 @@
 				A5E95C1227E0802B008B1E25 /* Sources */,
 				A5E95C1327E0802B008B1E25 /* Frameworks */,
 				A5E95C1427E0802B008B1E25 /* Resources */,
+				E537FE6561FB9E85EE018E4F /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -381,6 +382,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E537FE6561FB9E85EE018E4F /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CXSMusicPlayer/Pods-CXSMusicPlayer-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CXSMusicPlayer/Pods-CXSMusicPlayer-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CXSMusicPlayer/Pods-CXSMusicPlayer-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -577,6 +595,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 64C348R2YG;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CXSMusicPlayer/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -604,6 +623,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 64C348R2YG;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CXSMusicPlayer/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
