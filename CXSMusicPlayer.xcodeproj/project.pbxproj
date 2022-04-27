@@ -8,10 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		850E15A116576FBD51706378 /* libPods-CXSMusicPlayer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A125937D7B70F88B332AE59 /* libPods-CXSMusicPlayer.a */; };
-		A53CF56827F5DE4B00B20600 /* test1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A53CF56727F5DE4B00B20600 /* test1.mp3 */; };
-		A53CF56A27F5DE6400B20600 /* test2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A53CF56927F5DE6400B20600 /* test2.mp3 */; };
 		A5839E0927EB067C0066705B /* CXSPlayerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A5839E0827EB067C0066705B /* CXSPlayerManager.m */; };
-		A5839E0E27EB3D320066705B /* test0.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A5839E0D27EB3D320066705B /* test0.mp3 */; };
 		A5D72DF52800276700AAF4D0 /* CXSPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = A5D72DF42800276700AAF4D0 /* CXSPlayerView.m */; };
 		A5D72DF828005D4300AAF4D0 /* CXSMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5D72DF728005D4300AAF4D0 /* CXSMainViewController.m */; };
 		A5E9459D27E1DEBD008B1E25 /* AVPlayerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A5E9459C27E1DEBD008B1E25 /* AVPlayerManager.m */; };
@@ -29,6 +26,9 @@
 		A5E95C5327E0817E008B1E25 /* CXSTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5E95C5227E0817E008B1E25 /* CXSTabBarController.m */; };
 		A5E95C5627E08497008B1E25 /* CXSTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = A5E95C5527E08497008B1E25 /* CXSTabBar.m */; };
 		A5EBE02127E9F2EB0013585C /* CXSPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5EBE02027E9F2EB0013585C /* CXSPlayerViewController.m */; };
+		A5FB4C702807FE300020DDBA /* CXSCoreDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FB4C6F2807FE300020DDBA /* CXSCoreDataManager.m */; };
+		A5FB4C7A2810EF3D0020DDBA /* CXSMainMusicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FB4C792810EF3D0020DDBA /* CXSMainMusicViewController.m */; };
+		A5FB4C7D2810F0E30020DDBA /* CXSTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FB4C7C2810F0E30020DDBA /* CXSTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,11 +52,8 @@
 		4A125937D7B70F88B332AE59 /* libPods-CXSMusicPlayer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CXSMusicPlayer.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8029EABFE5F9AA45F2479CC0 /* Pods-CXSMusicPlayer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CXSMusicPlayer.release.xcconfig"; path = "Target Support Files/Pods-CXSMusicPlayer/Pods-CXSMusicPlayer.release.xcconfig"; sourceTree = "<group>"; };
 		87C682438F73731C7D7DE816 /* Pods-CXSMusicPlayer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CXSMusicPlayer.debug.xcconfig"; path = "Target Support Files/Pods-CXSMusicPlayer/Pods-CXSMusicPlayer.debug.xcconfig"; sourceTree = "<group>"; };
-		A53CF56727F5DE4B00B20600 /* test1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = test1.mp3; sourceTree = "<group>"; };
-		A53CF56927F5DE6400B20600 /* test2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = test2.mp3; sourceTree = "<group>"; };
 		A5839E0727EB067C0066705B /* CXSPlayerManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CXSPlayerManager.h; sourceTree = "<group>"; };
 		A5839E0827EB067C0066705B /* CXSPlayerManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CXSPlayerManager.m; sourceTree = "<group>"; };
-		A5839E0D27EB3D320066705B /* test0.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = test0.mp3; sourceTree = "<group>"; };
 		A5D72DF32800276700AAF4D0 /* CXSPlayerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CXSPlayerView.h; sourceTree = "<group>"; };
 		A5D72DF42800276700AAF4D0 /* CXSPlayerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CXSPlayerView.m; sourceTree = "<group>"; };
 		A5D72DF628005D4300AAF4D0 /* CXSMainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CXSMainViewController.h; sourceTree = "<group>"; };
@@ -87,6 +84,12 @@
 		A5E95C5527E08497008B1E25 /* CXSTabBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CXSTabBar.m; sourceTree = "<group>"; };
 		A5EBE01F27E9F2EB0013585C /* CXSPlayerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CXSPlayerViewController.h; sourceTree = "<group>"; };
 		A5EBE02027E9F2EB0013585C /* CXSPlayerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CXSPlayerViewController.m; sourceTree = "<group>"; };
+		A5FB4C6E2807FE300020DDBA /* CXSCoreDataManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CXSCoreDataManager.h; sourceTree = "<group>"; };
+		A5FB4C6F2807FE300020DDBA /* CXSCoreDataManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CXSCoreDataManager.m; sourceTree = "<group>"; };
+		A5FB4C782810EF3D0020DDBA /* CXSMainMusicViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CXSMainMusicViewController.h; sourceTree = "<group>"; };
+		A5FB4C792810EF3D0020DDBA /* CXSMainMusicViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CXSMainMusicViewController.m; sourceTree = "<group>"; };
+		A5FB4C7B2810F0E30020DDBA /* CXSTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CXSTableViewCell.h; sourceTree = "<group>"; };
+		A5FB4C7C2810F0E30020DDBA /* CXSTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CXSTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,16 +118,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		A5839E0A27EB391A0066705B /* resource */ = {
-			isa = PBXGroup;
-			children = (
-				A53CF56927F5DE6400B20600 /* test2.mp3 */,
-				A53CF56727F5DE4B00B20600 /* test1.mp3 */,
-				A5839E0D27EB3D320066705B /* test0.mp3 */,
-			);
-			path = resource;
-			sourceTree = "<group>";
-		};
 		A5E95C0D27E0802B008B1E25 = {
 			isa = PBXGroup;
 			children = (
@@ -158,13 +151,15 @@
 				A5E95C2027E0802B008B1E25 /* ViewController.m */,
 				A5EBE01E27E9F2C20013585C /* CXSPlayer */,
 				A5E95C5727E0849D008B1E25 /* CXSTabBar */,
-				A5839E0A27EB391A0066705B /* resource */,
+				A5FB4C712810EBB60020DDBA /* mainVC */,
 				A5E95C2227E0802B008B1E25 /* Main.storyboard */,
 				A5E95C2827E0802D008B1E25 /* Assets.xcassets */,
 				A5E95C2A27E0802D008B1E25 /* LaunchScreen.storyboard */,
 				A5E95C2D27E0802D008B1E25 /* Info.plist */,
 				A5E95C2E27E0802D008B1E25 /* main.m */,
 				A5E95C2527E0802B008B1E25 /* CXSMusicPlayer.xcdatamodeld */,
+				A5FB4C6E2807FE300020DDBA /* CXSCoreDataManager.h */,
+				A5FB4C6F2807FE300020DDBA /* CXSCoreDataManager.m */,
 				A5E9459B27E1DEBD008B1E25 /* AVPlayerManager.h */,
 				A5E9459C27E1DEBD008B1E25 /* AVPlayerManager.m */,
 			);
@@ -212,6 +207,17 @@
 				A5D72DF728005D4300AAF4D0 /* CXSMainViewController.m */,
 			);
 			path = CXSPlayer;
+			sourceTree = "<group>";
+		};
+		A5FB4C712810EBB60020DDBA /* mainVC */ = {
+			isa = PBXGroup;
+			children = (
+				A5FB4C782810EF3D0020DDBA /* CXSMainMusicViewController.h */,
+				A5FB4C792810EF3D0020DDBA /* CXSMainMusicViewController.m */,
+				A5FB4C7B2810F0E30020DDBA /* CXSTableViewCell.h */,
+				A5FB4C7C2810F0E30020DDBA /* CXSTableViewCell.m */,
+			);
+			path = mainVC;
 			sourceTree = "<group>";
 		};
 		B2176572E4FD1EDC458B368E /* Frameworks */ = {
@@ -338,9 +344,6 @@
 			files = (
 				A5E95C2C27E0802D008B1E25 /* LaunchScreen.storyboard in Resources */,
 				A5E95C2927E0802D008B1E25 /* Assets.xcassets in Resources */,
-				A5839E0E27EB3D320066705B /* test0.mp3 in Resources */,
-				A53CF56A27F5DE6400B20600 /* test2.mp3 in Resources */,
-				A53CF56827F5DE4B00B20600 /* test1.mp3 in Resources */,
 				A5E95C2427E0802B008B1E25 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -411,9 +414,12 @@
 				A5E95C2F27E0802D008B1E25 /* main.m in Sources */,
 				A5E95C2127E0802B008B1E25 /* ViewController.m in Sources */,
 				A5E95C1B27E0802B008B1E25 /* AppDelegate.m in Sources */,
+				A5FB4C7D2810F0E30020DDBA /* CXSTableViewCell.m in Sources */,
 				A5E9459D27E1DEBD008B1E25 /* AVPlayerManager.m in Sources */,
 				A5E95C1E27E0802B008B1E25 /* SceneDelegate.m in Sources */,
 				A5E95C5627E08497008B1E25 /* CXSTabBar.m in Sources */,
+				A5FB4C7A2810EF3D0020DDBA /* CXSMainMusicViewController.m in Sources */,
+				A5FB4C702807FE300020DDBA /* CXSCoreDataManager.m in Sources */,
 				A5EBE02127E9F2EB0013585C /* CXSPlayerViewController.m in Sources */,
 				A5E95C5327E0817E008B1E25 /* CXSTabBarController.m in Sources */,
 				A5D72DF828005D4300AAF4D0 /* CXSMainViewController.m in Sources */,
@@ -603,6 +609,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -631,6 +638,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

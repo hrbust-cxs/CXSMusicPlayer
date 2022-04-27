@@ -9,6 +9,7 @@
 #import "CXSTabBar.h"
 #import "CXSPlayerViewController.h"
 #import "CXSMainViewController.h"
+#import "CXSMainMusicViewController.h"
 
 #define ARC4COLOR [UIColor colorWithRed:arc4random_uniform(255)/255.0 green:arc4random_uniform(255)/255.0 blue:arc4random_uniform(255)/255.0 alpha:1]
 
@@ -40,9 +41,9 @@
     [super viewDidLoad];
     
     // 添加子控制器
-    [self setupChildVc:[[CXSMainViewController alloc] init] title:@"主歌单" image:@"tabbar_home_os7" selectedImage:@"tabbar_home_selected_os7"];
+    [self setupChildVc:[[CXSMainMusicViewController alloc] init] title:@"主歌单" image:@"tabbar_home_os7" selectedImage:@"tabbar_home_selected_os7"];
     
-    [self setupChildVc:[[UIViewController alloc] init] title:@"发现" image:@"tabbar_discover_os7" selectedImage:@"tabbar_discover_selected_os7"];
+    [self setupChildVc:[[CXSMainViewController alloc] init] title:@"发现" image:@"tabbar_discover_os7" selectedImage:@"tabbar_discover_selected_os7"];
     
     [self setupChildVc:[[UIViewController alloc] init] title:@"我的" image:@"tabbar_profile_os7" selectedImage:@"tabbar_profile_selected_os7"];
     
@@ -60,7 +61,7 @@
     vc.tabBarItem.title = title;
     vc.tabBarItem.image = [UIImage imageNamed:image];
     vc.tabBarItem.selectedImage = [UIImage imageNamed:selectedImage];
-    vc.view.backgroundColor = ARC4COLOR;
+    vc.view.backgroundColor = [UIColor whiteColor];
     [self addChildViewController:vc];
 }
 

@@ -4,4 +4,5 @@ target 'CXSMusicPlayer' do
   pod 'AFNetworking'
   pod 'Masonry‘
   pod 'SVProgressHUD'
+  pod 'SDWebImage'
 end

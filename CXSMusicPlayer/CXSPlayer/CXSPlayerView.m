@@ -6,6 +6,7 @@
 //
 
 #import "CXSPlayerView.h"
+#import "UIImageView+WebCache.h"
 
 #define kScreenWidth [UIScreen mainScreen].bounds.size.width
 #define kScreenHeight [UIScreen mainScreen].bounds.size.height
@@ -15,6 +16,11 @@
 @end
 
 @interface CXSPlayerView()
+
+@property (nonatomic, strong) UILabel *nameLabel;  //歌名
+@property (nonatomic, strong) UILabel *singerLabel; //歌手名
+
+@property (nonatomic, strong) UIImageView *musicImageView;
 
 @property (nonatomic, strong) UIButton *likeBtn;  //喜欢按钮
 @property (nonatomic, strong) UIButton *downLoadBtn; //下载按钮
@@ -51,9 +57,18 @@
     [self.model addObserver:self forKeyPath:@"isDownLoad" options:NSKeyValueObservingOptionNew context:nil];
     [self.model addObserver:self forKeyPath:@"playType" options:NSKeyValueObservingOptionNew context:nil];
     [self.model addObserver:self forKeyPath:@"isPlay" options:NSKeyValueObservingOptionNew context:nil];
+    [self.model addObserver:self forKeyPath:@"name" options:NSKeyValueObservingOptionNew context:nil];
+    [self.model addObserver:self forKeyPath:@"singer" options:NSKeyValueObservingOptionNew context:nil];
+    [self.model addObserver:self forKeyPath:@"musicImage" options:NSKeyValueObservingOptionNew context:nil];
+    
+    self.nameLabel.text = _model.name;
+    self.singerLabel.text = _model.singer;
 }
 
 - (void)addAllSubViews {
+    [self addSubview:self.nameLabel];
+    [self addSubview:self.singerLabel];
+    [self addSubview:self.musicImageView];
     [self addSubview:self.likeBtn];
     [self addSubview:self.downLoadBtn];
     [self addSubview:self.musicSlider];
@@ -65,6 +80,21 @@
 }
 
 - (void)layOutAllSubViews {
+    [self.nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self);
+        make.top.mas_equalTo(self).offset(10);
+        make.height.mas_offset(25);
+    }];
+    [self.singerLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.nameLabel);
+        make.top.mas_equalTo(self.nameLabel.mas_bottom).offset(4);
+        make.height.mas_offset(16);
+    }];
+    [self.musicImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self);
+        make.top.mas_equalTo(self).offset(80);
+        make.width.height.mas_offset(380);
+    }];
     [self.likeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self).offset(50);
         make.top.mas_equalTo(self).offset(550);
@@ -118,10 +148,7 @@
 
 //下载按钮点击
 - (void)didDownDeleteLoadButtonClick {
-    BOOL isSuccess = [self.delegate downLoadAndRemoveCurrentMusicSuccess:self.model.isDownLoad];
-    if(isSuccess){
-        self.model.isDownLoad = !self.model.isDownLoad;
-    }
+    [self.delegate downLoadAndRemoveCurrentMusicSuccess:self.model.isDownLoad];
 }
 
 //进度条拖动
@@ -166,7 +193,6 @@
 
 #pragma mark - KVO
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context{
-    id newValueString = change[@"new"];
     if([keyPath isEqualToString:@"isLike"]){
         if(self.model.isLike) {
             [_likeBtn setBackgroundImage:[UIImage imageNamed:@"play_icn_loved"] forState:UIControlStateNormal];
@@ -193,11 +219,44 @@
         }else {
             [_playPauseBtn setBackgroundImage:[UIImage imageNamed:@"play_btn_play"] forState:UIControlStateNormal];
         }
+    }else if([keyPath isEqualToString:@"name"]){
+        self.nameLabel.text = self.model.name;
+    }else if([keyPath isEqualToString:@"singer"]){
+        self.singerLabel.text = self.model.singer;
+    }else if([keyPath isEqualToString:@"musicImage"]){
+        [self.musicImageView sd_setImageWithURL:[NSURL URLWithString:self.model.musicImage]];
     }
 }
 
 
 #pragma mark - setter getter
+- (UILabel *)nameLabel {
+    if(!_nameLabel) {
+        _nameLabel = [[UILabel alloc] init];
+        _nameLabel.textColor = [UIColor blackColor];
+        _nameLabel.backgroundColor = [UIColor clearColor];
+        _nameLabel.font = [UIFont systemFontOfSize:25.f];
+    }
+    return _nameLabel;
+}
+
+- (UILabel *)singerLabel {
+    if(!_singerLabel) {
+        _singerLabel = [[UILabel alloc] init];
+        _singerLabel.textColor = [UIColor blackColor];
+        _singerLabel.backgroundColor = [UIColor clearColor];
+        _singerLabel.font = [UIFont systemFontOfSize:16.f];
+    }
+    return _singerLabel;
+}
+
+- (UIImageView *)musicImageView {
+    if(!_musicImageView){
+        _musicImageView = [[UIImageView alloc] init];
+    }
+    return _musicImageView;
+}
+
 - (UIButton *)likeBtn {
     if(!_likeBtn) {
         _likeBtn = [[UIButton alloc] init];

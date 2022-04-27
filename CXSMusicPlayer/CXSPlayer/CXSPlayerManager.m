@@ -74,14 +74,15 @@
             }
             
         }else if (self.playerType == AVPlayerTypeRandom){//随机播放
-            NSInteger random = arc4random_uniform((int)self.musicArray.count);
             
             [self.player replaceCurrentItemWithPlayerItem:self.musicArray[arc4random_uniform((int)self.musicArray.count)]];
         }else if (self.playerType ==AVPlayerTypeSingle){ //单曲循环在自动切换歌曲时进行判断
             [self.player replaceCurrentItemWithPlayerItem:self.musicArray[[self.musicArray  indexOfObject:self.player.currentItem]]];
         }
-        
+        self.updatePlayBtnUI();
         [self playMusic];
+        CGFloat Id = [self.musicArray indexOfObject:self.player.currentItem];
+        self.updateCurrentMusicId(Id);
     }];
 }
 
@@ -102,8 +103,10 @@
         }else if (self.playerType == AVPlayerTypeSingle){
             [self.player replaceCurrentItemWithPlayerItem:self.musicArray[[self.musicArray  indexOfObject:self.player.currentItem]]];
         }
-        
+        self.updatePlayBtnUI();
         [self playMusic];
+        CGFloat Id = [self.musicArray indexOfObject:self.player.currentItem];
+        self.updateCurrentMusicId(Id);
     }];
     
 }
@@ -116,6 +119,7 @@
     //播放当前资源
     if(self.player.currentItem){
         [self.player replaceCurrentItemWithPlayerItem:playerItem];
+        self.updatePlayBtnUI();
     }else {
         self.player = [self.player initWithPlayerItem:playerItem];
     }
@@ -140,10 +144,11 @@
     //播放当前资源
     if(self.player.currentItem){
         [self.player replaceCurrentItemWithPlayerItem:self.musicArray[index]];
+        self.updatePlayBtnUI();
     }else {
         self.player = [self.player initWithPlayerItem:self.musicArray[index]];
-        [self playMusic];
     }
+    [self playMusic];
 }
 
 #pragma mark - getter setter 懒加载

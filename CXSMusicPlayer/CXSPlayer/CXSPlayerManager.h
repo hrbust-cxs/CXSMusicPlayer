@@ -7,6 +7,7 @@
 
 #import <Foundation/Foundation.h>
 #import <AVFoundation/AVFoundation.h>
+#import "CXSSong+CoreDataClass.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -20,6 +21,10 @@ typedef NS_ENUM(NSInteger, playerType) {
 
 @property (nonatomic) void(^setSliderValue)(CGFloat value);
 @property (nonatomic) void(^updatePlayBtnUI)(void);
+@property (nonatomic) void(^updateCurrentMusicId)(CGFloat Id);
+
+//存放AVplayerItem的数组
+@property(nonatomic,strong) NSMutableArray *musicIdArray;
 
 //AVPlayer播放器
 @property (nonatomic, strong) AVPlayer *player;

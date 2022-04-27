@@ -2,6 +2,18 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:CXSMusicPlayer/CXSSong+CoreDataProperties.h">
+   </FileRef>
+   <FileRef
+      location = "group:CXSMusicPlayer/CXSSong+CoreDataClass.h">
+   </FileRef>
+   <FileRef
+      location = "group:CXSMusicPlayer/CXSSong+CoreDataClass.m">
+   </FileRef>
+   <FileRef
+      location = "group:CXSMusicPlayer/CXSSong+CoreDataProperties.m">
+   </FileRef>
+   <FileRef
       location = "group:CXSMusicPlayer.xcodeproj">
    </FileRef>
    <FileRef

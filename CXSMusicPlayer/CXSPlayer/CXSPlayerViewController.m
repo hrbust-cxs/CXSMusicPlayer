@@ -10,6 +10,7 @@
 #import "CXSPlayerView.h"
 #import "AFNetworking.h"
 #import "SVProgressHUD.h"
+#import "CXSCoreDataManager.h"
 
 const NSString *urlPreString = @"https://music-info-1302643497.cos.ap-guangzhou.myqcloud.com/music";
 
@@ -18,26 +19,58 @@ const NSString *urlPreString = @"https://music-info-1302643497.cos.ap-guangzhou.
 @property (nonatomic, strong)CXSPlayerView *playView;
 @property (nonatomic, strong)CXSPlayerManager *playerManager;
 
+@property (nonatomic, strong)NSArray *infoArray;
+
+//播放音乐必须的id数组和index
+@property (nonatomic, strong)NSArray *idArray;
+@property (nonatomic, assign)NSInteger index;
+@property (nonatomic, assign)NSInteger currentId;
+
 @end
 
 @implementation CXSPlayerViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
++ (instancetype)shareViewController {
+    static CXSPlayerViewController *sharedVC = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedVC = [CXSPlayerViewController new];
+    });
+    return sharedVC;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     [self initDefault];
 }
 
 - (void)initDefault {
+    [self getCoreDataInfo];
     [self.view addSubview:self.playView];
     [self playMusic];
     __weak typeof(self) weakSelf = self;
     self.playerManager.setSliderValue = ^(CGFloat value) {
         __strong typeof(self) strongSelf = weakSelf;
-        [self.playView setSliderValue:value];
+        [strongSelf.playView setSliderValue:value];
     };
     self.playerManager.updatePlayBtnUI = ^{
-        self.playView.model.isPlay = YES;
+        __strong typeof(self) strongSelf = weakSelf;
+        strongSelf.playView.model.isPlay = YES;
     };
+    self.playerManager.updateCurrentMusicId = ^(CGFloat Id) {
+        __strong typeof(self) strongSelf = weakSelf;
+        strongSelf.currentId = Id;
+        [strongSelf updatePlayViewTitle];
+    };
+}
+
+#pragma mark - coreData request
+- (void)getCoreDataInfo {
+//    [[CXSCoreDataManager sharedManager] addSongWithInfo:1 name:@"cccccc" singer:@"chenxinshuang"];
+    self.infoArray = [[CXSCoreDataManager sharedManager] getSongInfo];
+    self.idArray = [[NSUserDefaults standardUserDefaults] objectForKey:@"CXSIDArray"];
+    self.index = [[[NSUserDefaults standardUserDefaults] objectForKey:@"CXSIndex"] intValue];
+    self.currentId = [[self.idArray objectAtIndex:self.index] intValue];
 }
 
 #pragma mark - CXSPlayVCActionProcotol
@@ -45,9 +78,10 @@ const NSString *urlPreString = @"https://music-info-1302643497.cos.ap-guangzhou.
     //option
 }
 
-- (BOOL)downLoadAndRemoveCurrentMusicSuccess:(BOOL)isDown {
+- (void)downLoadAndRemoveCurrentMusicSuccess:(BOOL)isDown {
     //option
-    NSString *idString = @"1.mp3";
+    int musicId = self.currentId;
+    NSString *idString = [NSString stringWithFormat:@"%d.mp3",musicId];
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *pathDocuments = [paths objectAtIndex:0];
@@ -55,25 +89,25 @@ const NSString *urlPreString = @"https://music-info-1302643497.cos.ap-guangzhou.
     
     if(!isDown){
         //下载
-        NSURL *url = [NSURL URLWithString:@"https://music-info-1302643497.cos.ap-guangzhou.myqcloud.com/music/song/1.mp3"];
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/song/%@",urlPreString,idString]];
         //获取document路径
         if([[NSFileManager defaultManager] fileExistsAtPath:path]) {
             [SVProgressHUD showWithStatus:@"文件已存在"];
             [SVProgressHUD dismissWithDelay:0.5 completion:nil];
-            return NO;
+            self.playView.model.isDownLoad = NO;
         }
         [self downLoadMusicMP3WithURL:url];
-        return YES;
         
     }else{
         //删除
         if([[NSFileManager defaultManager] fileExistsAtPath:path]) {
             [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
-            return YES;
+            self.playView.model.isDownLoad = NO;
+            [SVProgressHUD showWithStatus:@"文件删除成功"];
+        }else{
+            [SVProgressHUD showWithStatus:@"文件不存在，删除失败"];
         }
-        [SVProgressHUD showWithStatus:@"文件不存在，删除失败"];
         [SVProgressHUD dismissWithDelay:0.5 completion:nil];
-        return NO;
     }
 }
 
@@ -125,6 +159,7 @@ const NSString *urlPreString = @"https://music-info-1302643497.cos.ap-guangzhou.
         //        这个block里面拿到下载结果
         NSData *data = [NSData dataWithContentsOfURL:filePath];
         if(data){
+            self.playView.model.isDownLoad = YES;
             [SVProgressHUD showSuccessWithStatus:@"下载成功"];
         }else{
             [SVProgressHUD showErrorWithStatus:@"下载失败"];
@@ -137,13 +172,37 @@ const NSString *urlPreString = @"https://music-info-1302643497.cos.ap-guangzhou.
 
 #pragma mark - private
 - (void)playMusic {
+    int musicId = -1;
     NSMutableArray *musicArray = [NSMutableArray array];
-    for(int i = 0; i < 3; i ++) {
-        NSString *string = [NSString stringWithFormat:@"%@/song/%d.mp3",urlPreString,i];
+    for(int i = 0; i < self.idArray.count; i ++) {
+        musicId = [[self.idArray objectAtIndex:i] intValue];
+        NSString *string = [NSString stringWithFormat:@"%@/song/%d.mp3",urlPreString,musicId];
         NSURL *url = [NSURL URLWithString:string];
         [musicArray addObject:url];
     }
-    [self.playerManager musicPlayerWithArray:musicArray andIndex:0];
+    [self.playerManager musicPlayerWithArray:musicArray andIndex:self.index];
+    [self updatePlayViewTitle];
+}
+
+- (void)updatePlayViewTitle {
+    CXSSong *songInfo = self.infoArray[self.currentId];
+    self.playView.model.name = songInfo.name;
+    self.playView.model.singer = songInfo.singer;
+    [self updateImageView:songInfo.id];
+    
+}
+
+- (void)updateImageView:(int)Id {
+    NSString *idString = [NSString stringWithFormat:@"%d.jpg",Id];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *pathDocuments = [paths objectAtIndex:0];
+    NSString *path = [NSString stringWithFormat:@"%@/%@", pathDocuments,idString];
+    if([[NSFileManager defaultManager] fileExistsAtPath:path]) {
+        //文件存在
+        self.playView.model.musicImage = path;
+    }else{
+        self.playView.model.musicImage = [NSString stringWithFormat:@"%@/image/%d.jpg",urlPreString,Id];
+    }
 }
 
 #pragma mark - getter setter
@@ -161,6 +220,9 @@ const NSString *urlPreString = @"https://music-info-1302643497.cos.ap-guangzhou.
         model.isDownLoad = NO;
         model.playType = 0;
         model.isPlay = YES;
+        model.name = @"XXXX";
+        model.singer = @"XXX";
+        model.musicImage = @"https://music-info-1302643497.cos.ap-guangzhou.myqcloud.com/music/image/1.jpg";
         _playView = [[CXSPlayerView alloc] initWithModel:model];
         _playView.delegate = self;
         //添加监听

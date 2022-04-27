@@ -7,6 +7,7 @@
 
 #import "CXSMainViewController.h"
 #import "CXSPlayerViewController.h"
+#import "CXSCoreDataManager.h"
 
 @interface CXSMainViewController ()
 
@@ -25,9 +26,21 @@
 }
 
 - (void)pushPlayMusicViewController {
-    CXSPlayerViewController *vc = [[CXSPlayerViewController alloc] init];
-    [self presentViewController:vc animated:YES completion:^{
-    }];
+    for(int i = 0; i < 30;i++)
+    {
+        [[CXSCoreDataManager sharedManager] deleteSongWithId:i];
+    }
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *pathDocuments = [paths objectAtIndex:0];
+    NSString *files  = [[NSBundle bundleWithPath:pathDocuments] pathForResource:@"musicInfo" ofType:@"txt"];
+    NSString *lines = [NSString stringWithContentsOfFile:files encoding:NSUTF8StringEncoding error:nil];
+    NSArray *allMusicNameSingerInfo = [lines componentsSeparatedByString:@"\n"];
+    for(int i = 0 ; i < allMusicNameSingerInfo.count;i++) {
+        NSString *musicInfo = allMusicNameSingerInfo[i];
+        NSArray *musicInfoArray = [musicInfo componentsSeparatedByString:@" - "];
+        [[CXSCoreDataManager sharedManager] addSongWithInfo:[musicInfoArray[0] intValue] name:musicInfoArray[2] singer:musicInfoArray[1]];
+    }
 }
 
 @end
