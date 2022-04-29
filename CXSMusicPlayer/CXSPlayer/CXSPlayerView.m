@@ -20,11 +20,13 @@
 @property (nonatomic, strong) UILabel *nameLabel;  //歌名
 @property (nonatomic, strong) UILabel *singerLabel; //歌手名
 
-@property (nonatomic, strong) UIImageView *musicImageView;
+@property (nonatomic, strong) UIImageView *musicImageView; //海报图片
 
 @property (nonatomic, strong) UIButton *likeBtn;  //喜欢按钮
 @property (nonatomic, strong) UIButton *downLoadBtn; //下载按钮
+@property (nonatomic, strong) UILabel *currentTimeLabel;  //当前时间
 @property (nonatomic, retain) UISlider *musicSlider;  //进度条
+@property (nonatomic, strong) UILabel *songTimeLabel;  //歌曲时长
 @property (nonatomic, strong) UIButton *playTypeBtn;  //播放模式
 @property (nonatomic, retain) UIButton *lastMusicBtn; //上一曲
 @property (nonatomic, retain) UIButton *playPauseBtn; //播放暂停
@@ -71,7 +73,9 @@
     [self addSubview:self.musicImageView];
     [self addSubview:self.likeBtn];
     [self addSubview:self.downLoadBtn];
+    [self addSubview:self.currentTimeLabel];
     [self addSubview:self.musicSlider];
+    [self addSubview:self.songTimeLabel];
     [self addSubview:self.playTypeBtn];
     [self addSubview:self.lastMusicBtn];
     [self addSubview:self.playPauseBtn];
@@ -97,7 +101,7 @@
     }];
     [self.likeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self).offset(50);
-        make.top.mas_equalTo(self).offset(550);
+        make.top.mas_equalTo(self).offset(600);
     }];
     [self.downLoadBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.mas_equalTo(self).offset(-50);
@@ -109,7 +113,16 @@
         make.width.mas_offset(kScreenWidth - 100);
         make.height.mas_offset(20);
     }];
-    
+    [self.currentTimeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.mas_equalTo(self.musicSlider);
+        make.right.mas_equalTo(self.musicSlider.mas_left).offset(-5);
+        make.height.mas_offset(20);
+    }];
+    [self.songTimeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.mas_equalTo(self.musicSlider);
+        make.left.mas_equalTo(self.musicSlider.mas_right).offset(5);
+        make.height.mas_offset(20);
+    }];
     [self.playPauseBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.mas_equalTo(self);
         make.top.mas_equalTo(self.musicSlider.mas_bottom).offset(30);
@@ -133,11 +146,21 @@
     }];
 }
 
+- (NSString*)stringWithNSTimeInterval:(NSTimeInterval)interval {
+    NSInteger min = interval/60;
+    NSInteger sec = (NSInteger)interval % 60;
+    return [NSString stringWithFormat:@"%02ld:%02ld",min,sec];
+}
+
 #pragma mark - public
 - (void)setSliderValue:(CGFloat)value {
     self.musicSlider.value = value;
 }
 
+- (void)setTimeLabelWithTotal:(NSTimeInterval)totalTime current:(NSTimeInterval)currentTime {
+    self.currentTimeLabel.text = [self stringWithNSTimeInterval:currentTime];
+    self.songTimeLabel.text = [self stringWithNSTimeInterval:totalTime];
+}
 
 #pragma mark - action
 //喜欢按钮点击
@@ -277,6 +300,17 @@
     return _downLoadBtn;
 }
 
+- (UILabel *)currentTimeLabel {
+    if(!_currentTimeLabel) {
+        _currentTimeLabel = [[UILabel alloc] init];
+        _currentTimeLabel.textColor = [UIColor blackColor];
+        _currentTimeLabel.backgroundColor = [UIColor clearColor];
+        _currentTimeLabel.font = [UIFont systemFontOfSize:12.f];
+        _currentTimeLabel.text = @"00:00";
+    }
+    return _currentTimeLabel;
+}
+
 //进度条
 - (UISlider *)musicSlider {
     if(!_musicSlider) {
@@ -288,6 +322,16 @@
     return _musicSlider;
 }
 
+- (UILabel *)songTimeLabel {
+    if(!_songTimeLabel) {
+        _songTimeLabel = [[UILabel alloc] init];
+        _songTimeLabel.textColor = [UIColor blackColor];
+        _songTimeLabel.backgroundColor = [UIColor clearColor];
+        _songTimeLabel.font = [UIFont systemFontOfSize:12.f];
+        _songTimeLabel.text = @"00:00";
+    }
+    return _songTimeLabel;
+}
 
 //播放模式
 - (UIButton *)playTypeBtn {

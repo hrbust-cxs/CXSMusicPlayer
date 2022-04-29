@@ -47,11 +47,13 @@ const NSString *urlPreString = @"https://music-info-1302643497.cos.ap-guangzhou.
 - (void)initDefault {
     [self getCoreDataInfo];
     [self.view addSubview:self.playView];
-    [self playMusic];
     __weak typeof(self) weakSelf = self;
     self.playerManager.setSliderValue = ^(CGFloat value) {
         __strong typeof(self) strongSelf = weakSelf;
         [strongSelf.playView setSliderValue:value];
+        NSTimeInterval totalTime = [strongSelf.playerManager totalTime];
+        NSTimeInterval currentTime = [strongSelf.playerManager currentTime];
+        [strongSelf.playView setTimeLabelWithTotal:totalTime current:currentTime];
     };
     self.playerManager.updatePlayBtnUI = ^{
         __strong typeof(self) strongSelf = weakSelf;
@@ -169,9 +171,8 @@ const NSString *urlPreString = @"https://music-info-1302643497.cos.ap-guangzhou.
     [downloadTask resume];
 }
 
-
-#pragma mark - private
-- (void)playMusic {
+#pragma mark - public
+- (void)playOnlineMusic {
     int musicId = -1;
     NSMutableArray *musicArray = [NSMutableArray array];
     for(int i = 0; i < self.idArray.count; i ++) {
@@ -184,6 +185,23 @@ const NSString *urlPreString = @"https://music-info-1302643497.cos.ap-guangzhou.
     [self updatePlayViewTitle];
 }
 
+- (void)playLocalMusic {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *pathDocuments = [paths objectAtIndex:0];
+    
+    int musicId = -1;
+    NSMutableArray *musicArray = [NSMutableArray array];
+    for(int i = 0; i < self.idArray.count; i ++) {
+        musicId = [[self.idArray objectAtIndex:i] intValue];
+        NSString *string = [NSString stringWithFormat:@"%@/%d.mp3",pathDocuments,musicId];
+        NSURL *url = [NSURL fileURLWithPath:string];
+        [musicArray addObject:url];
+    }
+    [self.playerManager musicPlayerWithArray:musicArray andIndex:self.index];
+    [self updatePlayViewTitle];
+}
+
+#pragma mark - private
 - (void)updatePlayViewTitle {
     CXSSong *songInfo = self.infoArray[self.currentId];
     self.playView.model.name = songInfo.name;
@@ -197,12 +215,8 @@ const NSString *urlPreString = @"https://music-info-1302643497.cos.ap-guangzhou.
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *pathDocuments = [paths objectAtIndex:0];
     NSString *path = [NSString stringWithFormat:@"%@/%@", pathDocuments,idString];
-    if([[NSFileManager defaultManager] fileExistsAtPath:path]) {
-        //文件存在
-        self.playView.model.musicImage = path;
-    }else{
-        self.playView.model.musicImage = [NSString stringWithFormat:@"%@/image/%d.jpg",urlPreString,Id];
-    }
+    //sdwebimage 异步缓存
+    self.playView.model.musicImage = [NSString stringWithFormat:@"%@/image/%d.jpg",urlPreString,Id];
 }
 
 #pragma mark - getter setter

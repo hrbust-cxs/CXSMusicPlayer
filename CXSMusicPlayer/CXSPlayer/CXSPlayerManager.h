@@ -50,6 +50,9 @@ typedef NS_ENUM(NSInteger, playerType) {
 //播放musicArray的制定index
 - (void)musicPlayerWithArray:(NSArray *)musicArray andIndex:(NSInteger )index;
 
+- (NSTimeInterval)currentTime;
+- (NSTimeInterval)totalTime;
+
 @end
 
 NS_ASSUME_NONNULL_END

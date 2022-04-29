@@ -54,6 +54,7 @@
 - (void)pushPlayMusicViewController {
     CXSPlayerViewController *vc = [CXSPlayerViewController shareViewController];
     [self presentViewController:vc animated:YES completion:^{
+        [vc playOnlineMusic];
     }];
 }
 

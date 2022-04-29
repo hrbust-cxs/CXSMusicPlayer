@@ -47,6 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithModel:(CXSPlayerViewModel*)model;
 - (void)setSliderValue:(CGFloat)value;
+- (void)setTimeLabelWithTotal:(NSTimeInterval)totalTime current:(NSTimeInterval)currentTime;
 
 @end
 

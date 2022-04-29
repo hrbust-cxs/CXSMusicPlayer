@@ -151,6 +151,24 @@
     [self playMusic];
 }
 
+- (NSTimeInterval)totalTime {
+    CMTime totalTime = self.player.currentItem.duration;
+    NSTimeInterval sec = CMTimeGetSeconds(totalTime);
+    if (isnan(sec)) {
+        return 0;
+    }
+    return sec;
+}
+
+- (NSTimeInterval)currentTime {
+    CMTime currentTime = self.player.currentItem.currentTime;
+    NSTimeInterval sec = CMTimeGetSeconds(currentTime);
+    if (isnan(sec)) {
+        return 0;
+    }
+    return sec;
+}
+
 #pragma mark - getter setter 懒加载
 - (AVPlayer *)player {
     if (!_player) {
