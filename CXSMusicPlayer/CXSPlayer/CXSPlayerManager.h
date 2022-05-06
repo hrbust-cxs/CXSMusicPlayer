@@ -19,9 +19,9 @@ typedef NS_ENUM(NSInteger, playerType) {
 
 @interface CXSPlayerManager : NSObject
 
-@property (nonatomic) void(^setSliderValue)(CGFloat value);
-@property (nonatomic) void(^updatePlayBtnUI)(void);
-@property (nonatomic) void(^updateCurrentMusicId)(CGFloat Id);
+@property (nonatomic) void(^setSliderValue)(CGFloat value); //更新进度条
+@property (nonatomic) void(^updatePlayBtnUI)(void);  //更新UI
+@property (nonatomic) void(^updateCurrentMusicId)(CGFloat Id);  //更新音乐ID
 
 //存放AVplayerItem的数组
 @property(nonatomic,strong) NSMutableArray *musicIdArray;

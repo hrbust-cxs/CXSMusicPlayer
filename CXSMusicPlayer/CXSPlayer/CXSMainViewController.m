@@ -31,10 +31,8 @@
         [[CXSCoreDataManager sharedManager] deleteSongWithId:i];
     }
     
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *pathDocuments = [paths objectAtIndex:0];
-    NSString *files  = [[NSBundle bundleWithPath:pathDocuments] pathForResource:@"musicInfo" ofType:@"txt"];
-    NSString *lines = [NSString stringWithContentsOfFile:files encoding:NSUTF8StringEncoding error:nil];
+    NSString *files  = @"https://music-info-1302643497.cos.ap-guangzhou.myqcloud.com/music/musicInfo.txt";
+    NSString *lines = [NSString stringWithContentsOfURL:[NSURL URLWithString:files] encoding:NSUTF8StringEncoding error:nil];
     NSArray *allMusicNameSingerInfo = [lines componentsSeparatedByString:@"\n"];
     for(int i = 0 ; i < allMusicNameSingerInfo.count;i++) {
         NSString *musicInfo = allMusicNameSingerInfo[i];

@@ -71,6 +71,7 @@
     [self addSubview:self.nameLabel];
     [self addSubview:self.singerLabel];
     [self addSubview:self.musicImageView];
+    [self addSubview:self.lyricsLabel];
     [self addSubview:self.likeBtn];
     [self addSubview:self.downLoadBtn];
     [self addSubview:self.currentTimeLabel];
@@ -98,6 +99,12 @@
         make.centerX.equalTo(self);
         make.top.mas_equalTo(self).offset(80);
         make.width.height.mas_offset(380);
+    }];
+    [self.lyricsLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.musicImageView);
+        make.top.mas_equalTo(self.musicImageView.mas_bottom).offset(50);
+        make.width.mas_offset(380);
+        make.height.mas_offset(50);
     }];
     [self.likeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self).offset(50);
@@ -386,6 +393,19 @@
         [_currentMusicListBtn setBackgroundImage:[UIImage imageNamed:@"play_icn_list"] forState:UIControlStateNormal];
     }
     return _currentMusicListBtn;
+}
+
+//歌词
+- (UILabel *)lyricsLabel {
+    if(!_lyricsLabel) {
+        _lyricsLabel = [[UILabel alloc] init];
+        _lyricsLabel.textColor = [UIColor blackColor];
+        _lyricsLabel.backgroundColor = [UIColor clearColor];
+        _lyricsLabel.font = [UIFont systemFontOfSize:24.f];
+        _lyricsLabel.text = @"暂无歌词";
+        _lyricsLabel.textAlignment = NSTextAlignmentCenter;
+    }
+    return _lyricsLabel;
 }
 
 @end

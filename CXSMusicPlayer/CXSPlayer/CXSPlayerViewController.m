@@ -11,6 +11,7 @@
 #import "AFNetworking.h"
 #import "SVProgressHUD.h"
 #import "CXSCoreDataManager.h"
+#import "CXSLrcParser.h"
 
 const NSString *urlPreString = @"https://music-info-1302643497.cos.ap-guangzhou.myqcloud.com/music";
 
@@ -18,6 +19,7 @@ const NSString *urlPreString = @"https://music-info-1302643497.cos.ap-guangzhou.
 
 @property (nonatomic, strong)CXSPlayerView *playView;
 @property (nonatomic, strong)CXSPlayerManager *playerManager;
+@property (nonatomic, strong)CXSLrcParser *lrcParser;
 
 @property (nonatomic, strong)NSArray *infoArray;
 
@@ -54,14 +56,17 @@ const NSString *urlPreString = @"https://music-info-1302643497.cos.ap-guangzhou.
         NSTimeInterval totalTime = [strongSelf.playerManager totalTime];
         NSTimeInterval currentTime = [strongSelf.playerManager currentTime];
         [strongSelf.playView setTimeLabelWithTotal:totalTime current:currentTime];
+        // 展示歌词
+        [strongSelf showCurrentLRC];
     };
     self.playerManager.updatePlayBtnUI = ^{
         __strong typeof(self) strongSelf = weakSelf;
         strongSelf.playView.model.isPlay = YES;
+        strongSelf.playView.lyricsLabel.text = @"暂无歌词";
     };
     self.playerManager.updateCurrentMusicId = ^(CGFloat Id) {
         __strong typeof(self) strongSelf = weakSelf;
-        strongSelf.currentId = Id;
+        strongSelf.currentId = [[strongSelf.idArray objectAtIndex:Id] intValue];
         [strongSelf updatePlayViewTitle];
     };
 }
@@ -78,6 +83,10 @@ const NSString *urlPreString = @"https://music-info-1302643497.cos.ap-guangzhou.
 #pragma mark - CXSPlayVCActionProcotol
 - (void)changeLikeMode:(BOOL)isLike {
     //option
+    NSMutableDictionary *lovedDic = [NSMutableDictionary dictionary];
+    lovedDic = [[[NSUserDefaults standardUserDefaults] objectForKey:@"CXSLovedDictionary"] mutableCopy];
+    [lovedDic setObject:isLike?@(1):@(0) forKey:[NSString stringWithFormat:@"%ld",(long)self.currentId]];
+    [[NSUserDefaults standardUserDefaults] setObject:lovedDic forKey:@"CXSLovedDictionary"];
 }
 
 - (void)downLoadAndRemoveCurrentMusicSuccess:(BOOL)isDown {
@@ -97,9 +106,9 @@ const NSString *urlPreString = @"https://music-info-1302643497.cos.ap-guangzhou.
             [SVProgressHUD showWithStatus:@"文件已存在"];
             [SVProgressHUD dismissWithDelay:0.5 completion:nil];
             self.playView.model.isDownLoad = NO;
+        }else{
+            [self downLoadMusicMP3WithURL:url];
         }
-        [self downLoadMusicMP3WithURL:url];
-        
     }else{
         //删除
         if([[NSFileManager defaultManager] fileExistsAtPath:path]) {
@@ -111,6 +120,11 @@ const NSString *urlPreString = @"https://music-info-1302643497.cos.ap-guangzhou.
         }
         [SVProgressHUD dismissWithDelay:0.5 completion:nil];
     }
+    //设置是否下载的
+    NSMutableDictionary *localDic = [NSMutableDictionary dictionary];
+    localDic = [[[NSUserDefaults standardUserDefaults] objectForKey:@"CXSLocalDictionary"] mutableCopy];
+    [localDic setObject:isDown?@(0):@(1) forKey:[NSString stringWithFormat:@"%ld",(long)self.currentId]];
+    [[NSUserDefaults standardUserDefaults] setObject:localDic forKey:@"CXSLocalDictionary"];
 }
 
 - (void)changeSilder:(CGFloat)value {
@@ -140,6 +154,7 @@ const NSString *urlPreString = @"https://music-info-1302643497.cos.ap-guangzhou.
 
 - (void)showCurrentMusicList {
     //option
+   
 }
 
 #pragma mark - AFNetWorking 下载
@@ -167,6 +182,26 @@ const NSString *urlPreString = @"https://music-info-1302643497.cos.ap-guangzhou.
             [SVProgressHUD showErrorWithStatus:@"下载失败"];
         }
         [SVProgressHUD dismissWithDelay:0.4 completion:nil];
+    }];
+    [downloadTask resume];
+}
+
+- (void)downLoadMusicLRCWithURL:(NSURL*)url {
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    
+    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    
+    NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:request progress:^(NSProgress *downloadProgress){
+        //        这个block里面获取下载进度
+    } destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
+        //        这个block里面返回下载文件存放路径
+        NSURL *documentsDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
+        NSURL *url = [documentsDirectoryURL URLByAppendingPathComponent:[response suggestedFilename]];
+        return url;
+    } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
+        //        这个block里面拿到下载结果
+        NSLog(@"%@",filePath);
     }];
     [downloadTask resume];
 }
@@ -207,7 +242,13 @@ const NSString *urlPreString = @"https://music-info-1302643497.cos.ap-guangzhou.
     self.playView.model.name = songInfo.name;
     self.playView.model.singer = songInfo.singer;
     [self updateImageView:songInfo.id];
-    
+    [self updateLyricsWithSong:songInfo.id];
+    NSMutableDictionary *lovedDic = [NSMutableDictionary dictionary];
+    lovedDic = [[[NSUserDefaults standardUserDefaults] objectForKey:@"CXSLovedDictionary"] mutableCopy];
+    self.playView.model.isLike = [[lovedDic objectForKey:[NSString stringWithFormat:@"%ld",(long)self.currentId]] boolValue];
+    NSMutableDictionary *localDic = [NSMutableDictionary dictionary];
+    localDic = [[[NSUserDefaults standardUserDefaults] objectForKey:@"CXSLocalDictionary"] mutableCopy];
+    self.playView.model.isDownLoad = [[localDic objectForKey:[NSString stringWithFormat:@"%ld",(long)self.currentId]] boolValue];
 }
 
 - (void)updateImageView:(int)Id {
@@ -217,6 +258,42 @@ const NSString *urlPreString = @"https://music-info-1302643497.cos.ap-guangzhou.
     NSString *path = [NSString stringWithFormat:@"%@/%@", pathDocuments,idString];
     //sdwebimage 异步缓存
     self.playView.model.musicImage = [NSString stringWithFormat:@"%@/image/%d.jpg",urlPreString,Id];
+}
+
+- (void)updateLyricsWithSong:(int)Id {
+    NSString *idString = [NSString stringWithFormat:@"%d.lrc",Id];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *pathDocuments = [paths objectAtIndex:0];
+    NSString *path = [NSString stringWithFormat:@"%@/%@", pathDocuments,idString];
+    NSString *downLoadPath = [NSString stringWithFormat:@"%@/lyrics/%@", urlPreString,idString];
+    if([[NSFileManager defaultManager] fileExistsAtPath:path]) {
+        //存在
+        NSLog(@"%@",path);
+    }else{
+        //不存在
+        [self downLoadMusicLRCWithURL:[NSURL URLWithString:downLoadPath]];
+        sleep(1);
+    }
+    //处理歌词文件
+    NSString *lrcContent = [self.lrcParser getLrcFile:path];
+    if([lrcContent isEqualToString:@"暂无歌词\n"]){
+        self.playView.lyricsLabel.text = @"暂无歌词";
+        return;
+    }
+    [self.lrcParser parseLrc:lrcContent];
+}
+
+- (void)showCurrentLRC {
+    //本地文件路径：path 文件操作展示歌词
+    float currentTime = [self.playerManager currentTime];
+    NSLog(@"%d:%d",(int)currentTime / 60, (int)currentTime % 60);
+    for (int i = 0; i < self.lrcParser.timerArray.count; i++) {
+        NSArray *timeArray=[self.lrcParser.timerArray[i] componentsSeparatedByString:@":"];
+        float lrcTime=[timeArray[0] intValue]*60+[timeArray[1] floatValue]; if(currentTime>lrcTime){
+            self.playView.lyricsLabel.text = self.lrcParser.wordArray[i];
+        }else
+            break;
+    }
 }
 
 #pragma mark - getter setter
@@ -242,6 +319,13 @@ const NSString *urlPreString = @"https://music-info-1302643497.cos.ap-guangzhou.
         //添加监听
     }
     return _playView;
+}
+
+- (CXSLrcParser *)lrcParser {
+    if(!_lrcParser){
+        _lrcParser = [[CXSLrcParser alloc] init];
+    }
+    return _lrcParser;
 }
 
 @end

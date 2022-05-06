@@ -45,6 +45,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic) CXSPlayerViewModel *model;
 
+@property (nonatomic, strong) UILabel *lyricsLabel;  //歌词
+
 - (instancetype)initWithModel:(CXSPlayerViewModel*)model;
 - (void)setSliderValue:(CGFloat)value;
 - (void)setTimeLabelWithTotal:(NSTimeInterval)totalTime current:(NSTimeInterval)currentTime;

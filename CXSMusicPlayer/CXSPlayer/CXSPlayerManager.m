@@ -36,7 +36,7 @@
 
 #pragma mark - private method
 - (void)initDefault {
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(playerAction) userInfo:nil repeats:YES];
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(playerAction) userInfo:nil repeats:YES];
 }
 
 -(void)playerAction{
@@ -135,7 +135,7 @@
 
 //播放指定url的歌曲
 - (void)musicPlayerWithArray:(NSArray *)musicArray andIndex:(NSInteger )index{
-    
+    [self.musicArray removeAllObjects];
     for (NSURL * obj in musicArray) {
         AVPlayerItem *songItem = [[AVPlayerItem alloc] initWithURL:obj];
         [self.musicArray addObject:songItem];

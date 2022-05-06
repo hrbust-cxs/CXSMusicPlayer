@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		850E15A116576FBD51706378 /* libPods-CXSMusicPlayer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A125937D7B70F88B332AE59 /* libPods-CXSMusicPlayer.a */; };
 		A5839E0927EB067C0066705B /* CXSPlayerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A5839E0827EB067C0066705B /* CXSPlayerManager.m */; };
+		A5B2AADB2822833A00F0E3AA /* CXSLrcParser.m in Sources */ = {isa = PBXBuildFile; fileRef = A5B2AADA2822833A00F0E3AA /* CXSLrcParser.m */; };
+		A5B2AAE02823BEED00F0E3AA /* CXSLovedMusicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5B2AADF2823BEED00F0E3AA /* CXSLovedMusicViewController.m */; };
+		A5B2AAE32823BF0800F0E3AA /* CXSLocalMusicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5B2AAE22823BF0800F0E3AA /* CXSLocalMusicViewController.m */; };
 		A5D72DF52800276700AAF4D0 /* CXSPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = A5D72DF42800276700AAF4D0 /* CXSPlayerView.m */; };
 		A5D72DF828005D4300AAF4D0 /* CXSMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5D72DF728005D4300AAF4D0 /* CXSMainViewController.m */; };
 		A5E9459D27E1DEBD008B1E25 /* AVPlayerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A5E9459C27E1DEBD008B1E25 /* AVPlayerManager.m */; };
@@ -54,6 +57,12 @@
 		87C682438F73731C7D7DE816 /* Pods-CXSMusicPlayer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CXSMusicPlayer.debug.xcconfig"; path = "Target Support Files/Pods-CXSMusicPlayer/Pods-CXSMusicPlayer.debug.xcconfig"; sourceTree = "<group>"; };
 		A5839E0727EB067C0066705B /* CXSPlayerManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CXSPlayerManager.h; sourceTree = "<group>"; };
 		A5839E0827EB067C0066705B /* CXSPlayerManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CXSPlayerManager.m; sourceTree = "<group>"; };
+		A5B2AAD92822833A00F0E3AA /* CXSLrcParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CXSLrcParser.h; sourceTree = "<group>"; };
+		A5B2AADA2822833A00F0E3AA /* CXSLrcParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CXSLrcParser.m; sourceTree = "<group>"; };
+		A5B2AADE2823BEED00F0E3AA /* CXSLovedMusicViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CXSLovedMusicViewController.h; sourceTree = "<group>"; };
+		A5B2AADF2823BEED00F0E3AA /* CXSLovedMusicViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CXSLovedMusicViewController.m; sourceTree = "<group>"; };
+		A5B2AAE12823BF0800F0E3AA /* CXSLocalMusicViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CXSLocalMusicViewController.h; sourceTree = "<group>"; };
+		A5B2AAE22823BF0800F0E3AA /* CXSLocalMusicViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CXSLocalMusicViewController.m; sourceTree = "<group>"; };
 		A5D72DF32800276700AAF4D0 /* CXSPlayerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CXSPlayerView.h; sourceTree = "<group>"; };
 		A5D72DF42800276700AAF4D0 /* CXSPlayerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CXSPlayerView.m; sourceTree = "<group>"; };
 		A5D72DF628005D4300AAF4D0 /* CXSMainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CXSMainViewController.h; sourceTree = "<group>"; };
@@ -151,7 +160,7 @@
 				A5E95C2027E0802B008B1E25 /* ViewController.m */,
 				A5EBE01E27E9F2C20013585C /* CXSPlayer */,
 				A5E95C5727E0849D008B1E25 /* CXSTabBar */,
-				A5FB4C712810EBB60020DDBA /* mainVC */,
+				A5FB4C712810EBB60020DDBA /* TabVC */,
 				A5E95C2227E0802B008B1E25 /* Main.storyboard */,
 				A5E95C2827E0802D008B1E25 /* Assets.xcassets */,
 				A5E95C2A27E0802D008B1E25 /* LaunchScreen.storyboard */,
@@ -205,19 +214,25 @@
 				A5D72DF42800276700AAF4D0 /* CXSPlayerView.m */,
 				A5D72DF628005D4300AAF4D0 /* CXSMainViewController.h */,
 				A5D72DF728005D4300AAF4D0 /* CXSMainViewController.m */,
+				A5B2AAD92822833A00F0E3AA /* CXSLrcParser.h */,
+				A5B2AADA2822833A00F0E3AA /* CXSLrcParser.m */,
 			);
 			path = CXSPlayer;
 			sourceTree = "<group>";
 		};
-		A5FB4C712810EBB60020DDBA /* mainVC */ = {
+		A5FB4C712810EBB60020DDBA /* TabVC */ = {
 			isa = PBXGroup;
 			children = (
 				A5FB4C782810EF3D0020DDBA /* CXSMainMusicViewController.h */,
 				A5FB4C792810EF3D0020DDBA /* CXSMainMusicViewController.m */,
+				A5B2AADE2823BEED00F0E3AA /* CXSLovedMusicViewController.h */,
+				A5B2AADF2823BEED00F0E3AA /* CXSLovedMusicViewController.m */,
+				A5B2AAE12823BF0800F0E3AA /* CXSLocalMusicViewController.h */,
+				A5B2AAE22823BF0800F0E3AA /* CXSLocalMusicViewController.m */,
 				A5FB4C7B2810F0E30020DDBA /* CXSTableViewCell.h */,
 				A5FB4C7C2810F0E30020DDBA /* CXSTableViewCell.m */,
 			);
-			path = mainVC;
+			path = TabVC;
 			sourceTree = "<group>";
 		};
 		B2176572E4FD1EDC458B368E /* Frameworks */ = {
@@ -416,6 +431,9 @@
 				A5E95C1B27E0802B008B1E25 /* AppDelegate.m in Sources */,
 				A5FB4C7D2810F0E30020DDBA /* CXSTableViewCell.m in Sources */,
 				A5E9459D27E1DEBD008B1E25 /* AVPlayerManager.m in Sources */,
+				A5B2AADB2822833A00F0E3AA /* CXSLrcParser.m in Sources */,
+				A5B2AAE02823BEED00F0E3AA /* CXSLovedMusicViewController.m in Sources */,
+				A5B2AAE32823BF0800F0E3AA /* CXSLocalMusicViewController.m in Sources */,
 				A5E95C1E27E0802B008B1E25 /* SceneDelegate.m in Sources */,
 				A5E95C5627E08497008B1E25 /* CXSTabBar.m in Sources */,
 				A5FB4C7A2810EF3D0020DDBA /* CXSMainMusicViewController.m in Sources */,

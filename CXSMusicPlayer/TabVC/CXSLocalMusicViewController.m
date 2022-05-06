@@ -1,71 +1,97 @@
 //
-//  CXSMainMusicViewController.m
+//  CXSLocalMusicViewController.m
 //  CXSMusicPlayer
 //
-//  Created by 陈新爽 on 2022/4/21.
+//  Created by 陈新爽 on 2022/5/5.
 //
 
-#import "CXSMainMusicViewController.h"
+#import "CXSLocalMusicViewController.h"
 #import "CXSTableViewCell.h"
 #import "CXSPlayerViewController.h"
 #import "CXSCoreDataManager.h"
 #import "CXSSong+CoreDataClass.h"
 
-@interface CXSMainMusicViewController ()
+@interface CXSLocalMusicViewController ()
 
+//数据库-所有数据
 @property (nonatomic, strong)NSArray *infoArray;
+//播放歌单
 @property (nonatomic, strong)NSMutableArray *idArray;
 
 @end
 
-@implementation CXSMainMusicViewController
+@implementation CXSLocalMusicViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self getCoreDataInfo];
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 50)];
-    label.text = @"主歌单";
+    label.text = @"我的音乐";
     label.textAlignment = NSTextAlignmentCenter;
     label.textColor = [UIColor whiteColor];
     label.backgroundColor = [UIColor grayColor];
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 50)];
     [headerView addSubview:label];
     self.tableView.tableHeaderView = headerView;
-    
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [self initIDArrayData];
+    [self.tableView reloadData];
 }
 
 #pragma mark - getInfo
 - (void)getCoreDataInfo {
     _infoArray = [[CXSCoreDataManager sharedManager] getSongInfo];
-    [self initIDArrayData];
+}
+
+- (void)initLocalMusicDic {
+    NSMutableDictionary *localDic = [NSMutableDictionary dictionary];
+    for(int i = 0; i < _infoArray.count;i++)
+    {
+        [localDic setObject:@(0) forKey:[NSString stringWithFormat:@"%d",i]];
+    }
+    [[NSUserDefaults standardUserDefaults] setObject:localDic forKey:@"CXSLocalDictionary"];
 }
 
 - (void)initIDArrayData {
-    for(int i = 0; i < _infoArray.count;i++)
+    NSDictionary *localDic = [[NSUserDefaults standardUserDefaults] objectForKey:@"CXSLocalDictionary"];
+    if(!localDic){
+        [self initLocalMusicDic];
+        localDic = [[NSUserDefaults standardUserDefaults] objectForKey:@"CXSLovedDictionary"];
+    }
+    for(int i = 0; i < localDic.count;i++)
     {
+        BOOL isLocal = [[localDic objectForKey:[NSString stringWithFormat:@"%d",i]] boolValue];
         CXSSong *song = _infoArray[i];
-        [self.idArray addObject:@(song.id)];
+        if(isLocal){
+            if(![self.idArray containsObject:@(song.id)]){
+                [self.idArray addObject:@(song.id)];
+            }
+        }else{
+            if([self.idArray containsObject:@(song.id)]){
+                [self.idArray removeObject:@(song.id)];
+            }
+        }
     }
     [[NSUserDefaults standardUserDefaults] setObject:self.idArray forKey:@"CXSIDArray"];
 }
-
 
 #pragma mark - click
 - (void)pushPlayMusicViewController {
     CXSPlayerViewController *vc = [CXSPlayerViewController shareViewController];
     [self presentViewController:vc animated:YES completion:^{
-        [vc playOnlineMusic];
+        [vc playLocalMusic];
     }];
 }
 
 #pragma mark - Table view data source
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return _infoArray.count;
+    return _idArray.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -74,7 +100,8 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     CXSTableViewCellModel *model = [[CXSTableViewCellModel alloc] init];
-    CXSSong *song = _infoArray[indexPath.row];
+    int Id = [_idArray[indexPath.row] intValue];
+    CXSSong *song = _infoArray[Id];
     model.name = song.name;
     model.singer = song.singer;
     CXSTableViewCell *cell = [[CXSTableViewCell alloc] initWithModel:model];
@@ -93,4 +120,5 @@
     }
     return _idArray;
 }
+
 @end
