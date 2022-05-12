@@ -7,7 +7,12 @@
 
 #import "AppDelegate.h"
 #import "CXSTabBarController.h"
+#import <AVFoundation/AVFoundation.h>
+#import "CXSPlayerViewController.h"
+
 @interface AppDelegate ()
+
+@property (nonatomic, strong)CXSPlayerViewController *playVC;
 
 @end
 
@@ -16,10 +21,46 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    //后台播放
+    AVAudioSession *session = [AVAudioSession sharedInstance];
+    [session setActive:YES error:nil];
+    [session setCategory:AVAudioSessionCategoryPlayback error:nil];
+    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+    
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.rootViewController = [[CXSTabBarController alloc] init];
     [self.window makeKeyAndVisible];
     return YES;
+}
+
+- (BOOL)becomeFirstResponder {
+    return YES;
+}
+
+#pragma mark - backgroud play info setting
+- (void)remoteControlReceivedWithEvent:(UIEvent *)event {
+    if (event.type == UIEventTypeRemoteControl) {  //判断是否为远程控制
+        switch (event.subtype) {
+            case  UIEventSubtypeRemoteControlPlay:
+                [self.playVC playPauseMusic:NO];
+                NSLog(@"接受到远程控制 - 播放");
+                break;
+            case UIEventSubtypeRemoteControlPause:
+                [self.playVC playPauseMusic:YES];
+                NSLog(@"接受到远程控制 - 暂停");
+                break;
+            case UIEventSubtypeRemoteControlNextTrack:
+                [self.playVC playNextMusic];
+                NSLog(@"接受到远程控制 - 下一首");
+                break;
+            case UIEventSubtypeRemoteControlPreviousTrack:
+                [self.playVC playLastMusic];
+                NSLog(@"接受到远程控制 - 上一首 ");
+                break;
+            default:
+                break;
+        }
+    }
 }
 
 
@@ -66,6 +107,14 @@
         NSLog(@"Unresolved error %@, %@", error, error.userInfo);
         abort();
     }
+}
+
+#pragma mark - setter getter
+- (CXSPlayerViewController *)playVC {
+    if(!_playVC){
+        _playVC = [CXSPlayerViewController shareViewController];
+    }
+    return _playVC;
 }
 
 @end

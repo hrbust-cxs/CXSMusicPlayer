@@ -204,7 +204,6 @@
 
 //播放/暂停按钮点击
 - (void)didPlayPauseButtonClick {
-    self.model.isPlay = !self.model.isPlay;
     //other option
     [self.delegate playPauseMusic:self.model.isPlay];
 }

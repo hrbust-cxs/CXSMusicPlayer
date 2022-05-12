@@ -12,6 +12,9 @@
 #import "SVProgressHUD.h"
 #import "CXSCoreDataManager.h"
 #import "CXSLrcParser.h"
+#import "UIImageView+WebCache.h"
+#import "SDImageCache.h"
+#import <MediaPlayer/MediaPlayer.h>
 
 const NSString *urlPreString = @"https://music-info-1302643497.cos.ap-guangzhou.myqcloud.com/music";
 
@@ -68,6 +71,7 @@ const NSString *urlPreString = @"https://music-info-1302643497.cos.ap-guangzhou.
         __strong typeof(self) strongSelf = weakSelf;
         strongSelf.currentId = [[strongSelf.idArray objectAtIndex:Id] intValue];
         [strongSelf updatePlayViewTitle];
+        [strongSelf setupLockScreenInfo];
     };
 }
 
@@ -130,6 +134,7 @@ const NSString *urlPreString = @"https://music-info-1302643497.cos.ap-guangzhou.
 - (void)changeSilder:(CGFloat)value {
     //option
     [self.playerManager playerProgressWithProgressFloat:value];
+    [self setupLockScreenInfo];
 }
 
 - (void)changePlayerMode:(NSInteger)type {
@@ -141,11 +146,13 @@ const NSString *urlPreString = @"https://music-info-1302643497.cos.ap-guangzhou.
 }
 
 - (void)playPauseMusic:(BOOL)isPlay {
-    if(isPlay){
+    self.playView.model.isPlay = !isPlay;
+    if(!isPlay){
         [self.playerManager playMusic];
     }else {
         [self.playerManager pasueMusic];
     }
+    [self setupLockScreenInfo];
 }
 
 - (void)playNextMusic {
@@ -218,6 +225,7 @@ const NSString *urlPreString = @"https://music-info-1302643497.cos.ap-guangzhou.
     }
     [self.playerManager musicPlayerWithArray:musicArray andIndex:self.index];
     [self updatePlayViewTitle];
+    [self setupLockScreenInfo];
 }
 
 - (void)playLocalMusic {
@@ -234,6 +242,7 @@ const NSString *urlPreString = @"https://music-info-1302643497.cos.ap-guangzhou.
     }
     [self.playerManager musicPlayerWithArray:musicArray andIndex:self.index];
     [self updatePlayViewTitle];
+    [self setupLockScreenInfo];
 }
 
 #pragma mark - private
@@ -272,12 +281,14 @@ const NSString *urlPreString = @"https://music-info-1302643497.cos.ap-guangzhou.
     }else{
         //不存在
         [self downLoadMusicLRCWithURL:[NSURL URLWithString:downLoadPath]];
+        //延迟调用1s，下载完成并且获取到文件
         sleep(1);
     }
     //处理歌词文件
     NSString *lrcContent = [self.lrcParser getLrcFile:path];
     if([lrcContent isEqualToString:@"暂无歌词\n"]){
         self.playView.lyricsLabel.text = @"暂无歌词";
+        [self.lrcParser removeAllArrayObject];
         return;
     }
     [self.lrcParser parseLrc:lrcContent];
@@ -326,6 +337,36 @@ const NSString *urlPreString = @"https://music-info-1302643497.cos.ap-guangzhou.
         _lrcParser = [[CXSLrcParser alloc] init];
     }
     return _lrcParser;
+}
+
+#pragma mark - 锁屏信息
+- (void)setupLockScreenInfo {
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        NSMutableDictionary *songInfo = [[NSMutableDictionary alloc] init];
+        NSString *key = [[SDWebImageManager sharedManager] cacheKeyForURL:[NSURL URLWithString:self.playView.model.musicImage]];
+        //获取缓存中的image
+        UIImage *image = [[SDImageCache sharedImageCache] imageFromCacheForKey:key];
+        if(!image){
+            //缓存中不存在，使用https的
+            NSData * imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:key]];
+            image = [UIImage imageWithData:imageData];
+        }
+        MPMediaItemArtwork *albumArt = [[MPMediaItemArtwork alloc] initWithBoundsSize:CGSizeMake(512, 512) requestHandler:^UIImage * _Nonnull(CGSize size) {
+            return image;
+        }];
+        //歌曲名称
+        [songInfo setObject:self.playView.model.name forKey:MPMediaItemPropertyTitle];
+        //演唱者
+        [songInfo setObject:self.playView.model.singer forKey:MPMediaItemPropertyArtist];
+        //专辑缩略图
+        [songInfo setObject:albumArt forKey:MPMediaItemPropertyArtwork];
+        [songInfo setObject:[NSNumber numberWithDouble:self.playerManager.currentTime] forKey:MPNowPlayingInfoPropertyElapsedPlaybackTime]; //音乐当前已经播放时间
+        [songInfo setObject:[NSNumber numberWithFloat:1.0] forKey:MPNowPlayingInfoPropertyPlaybackRate];//进度光标的速度
+        [songInfo setObject:[NSNumber numberWithDouble:self.playerManager.totalTime] forKey:MPMediaItemPropertyPlaybackDuration];//歌曲总时间设置
+     
+        //        设置锁屏状态下屏幕显示音乐信息
+        [[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:songInfo];
+    });
 }
 
 @end

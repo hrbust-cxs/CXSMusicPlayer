@@ -19,6 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 -(NSString *)getLrcFile:(NSString *)path;
 //解析歌词
 -(void)parseLrc:(NSString*)lrc;
+//删除旧的歌词数组
+- (void)removeAllArrayObject;
 
 @end
 

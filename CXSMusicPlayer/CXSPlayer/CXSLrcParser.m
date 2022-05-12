@@ -26,8 +26,7 @@
 
 -(void)parseLrc:(NSString *)lrc{
     if(![lrc isEqual:nil]) {
-        [self.wordArray removeAllObjects];
-        [self.timerArray removeAllObjects];
+        [self removeAllArrayObject];
         NSArray *sepArray = [lrc componentsSeparatedByString:@"["];
         NSArray *lineArray = [[NSArray alloc] init];
         for(int i = 0; i < sepArray.count; i++) {
@@ -42,5 +41,9 @@
     }
 }
 
+- (void)removeAllArrayObject {
+    [self.wordArray removeAllObjects];
+    [self.timerArray removeAllObjects];
+}
 
 @end
